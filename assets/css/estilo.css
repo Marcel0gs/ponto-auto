@@ -1101,7 +1101,7 @@ input[type='range']::-moz-range-thumb {
   background: var(--acento); border-color: var(--acento); color: #fff;
 }
 
-@media (min-width: 940px) { .simulador .resultado { position: sticky; top: 96px; } }
+
 .resultado {
   background: var(--tinta); color: #fff;
   border-radius: var(--raio); padding: clamp(1.2rem, 2.6vw, 1.8rem);
