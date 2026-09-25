@@ -1676,7 +1676,9 @@ input[type='range']::-moz-range-thumb {
 
 .faixa-texto {
   --p: 0;
-  overflow: hidden; white-space: nowrap;
+  /* clip, e não hidden: hidden vira área de rolagem própria e a animação
+     ligada à rolagem (celular) ficaria presa a ela, sem andar */
+  overflow: hidden; overflow: clip; white-space: nowrap;
   padding-block: clamp(1.4rem, 3.2vw, 2.6rem);
   border-block: 1px solid var(--linha);
 }
@@ -2027,6 +2029,26 @@ html.lenis, html.lenis body { height: auto; }
 .toque .vitrine__nome, .toque .vitrine-escura__nome { transform: none; will-change: auto; }
 /* no toque a faixa anda sozinha (animação que a GPU toca, lisa); o texto vem duplicado, então -50% emenda */
 .toque .faixa-texto__trilho { transform: none; animation: faixa-anda 38s linear infinite; }
+/* navegador novo (Chrome/Android 115+, Safari 26+): a faixa anda com a rolagem
+   por scroll-driven animation, que a GPU toca sem JavaScript e não trava */
+@supports (animation-timeline: view()) {
+  .toque .faixa-texto__trilho { animation: faixa-rola linear both; animation-timeline: view(); }
+  @keyframes faixa-rola { from { translate: 0 0; } to { translate: -34% 0; } }
+}
 @keyframes faixa-anda { from { translate: 0 0; } to { translate: -50% 0; } }
 .toque .quebra__fundo img, .toque .vitrine-escura__fundo img, .toque .foto-parallax img { transform: none; will-change: auto; }
 .toque .quebra__fundo, .toque .vitrine-escura__fundo { inset: 0; }
+
+/* setas da vitrine nas pontas da foto, no meio da altura */
+.vitrine__palco .vit-seta {
+  position: absolute; top: 50%; translate: 0 -50%; z-index: 3;
+  width: 52px; height: 52px; background: rgba(255, 255, 255, .9); border-color: var(--linha);
+  box-shadow: 0 10px 24px -14px rgba(8, 9, 12, .45);
+}
+.vitrine__palco .vit-seta:hover { background: #fff; }
+.vit-seta--ant { left: 14px; }
+.vit-seta--prox { right: 14px; }
+@media (max-width: 640px) { .vitrine__palco .vit-seta { width: 42px; height: 42px; } .vit-seta--ant { left: 8px; } .vit-seta--prox { right: 8px; } }
+
+.vitrine__todos { padding: 1rem 1.9rem; }
+@media (max-width: 640px) { .vitrine__todos { width: 100%; } }

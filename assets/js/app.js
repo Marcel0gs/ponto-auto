@@ -215,7 +215,7 @@
   /* Qualquer elemento com data-parallax recebe --p de 0 (entrando por baixo)
      a 1 (saindo por cima) enquanto cruza a tela. O CSS decide o que fazer. */
   function parallax() {
-    const alvos = $('[data-parallax]');
+    const alvos = $$('[data-parallax]');
     if (!alvos.length || paradoQuieto || toque) return;
 
     let medidas = [];
@@ -454,8 +454,8 @@
       $$('[data-tipo]', abas).forEach((x) => x.setAttribute('aria-selected', String(x === b)));
       mostrar(porTipo(tipo), 0, 1);
     });
-    $('[data-vit-ant]', raiz).addEventListener('click', () => mostrar(lista, (i - 1 + lista.length) % lista.length, -1));
-    $('[data-vit-prox]', raiz).addEventListener('click', () => mostrar(lista, (i + 1) % lista.length, 1));
+    $$('[data-vit-ant]', raiz).forEach((b) => b.addEventListener('click', () => mostrar(lista, (i - 1 + lista.length) % lista.length, -1)));
+    $$('[data-vit-prox]', raiz).forEach((b) => b.addEventListener('click', () => mostrar(lista, (i + 1) % lista.length, 1)));
 
     // arrastar para o lado no celular também troca de carro
     let x0 = null;

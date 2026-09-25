@@ -262,7 +262,8 @@
       <div class="vitrine rev rev--d1" id="vitrine">
         <div class="vitrine__topo">
           <div class="vitrine__abas" role="tablist" aria-label="Tipo de carro"></div>
-          <a class="link-seta" href="estoque.html">
+          <a class="btn btn--g vitrine__todos" href="estoque.html">
+            <svg class="icone" aria-hidden="true"><use href="#i-car-front"></use></svg>
             Ver o estoque inteiro
             <svg class="icone" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
           </a>
@@ -272,6 +273,8 @@
           <span class="vitrine__nome" aria-hidden="true"></span>
           <span class="vitrine__selo"></span>
           <span class="vitrine__contador" aria-live="polite"></span>
+          <button class="carrossel__seta vit-seta vit-seta--ant" type="button" data-vit-ant aria-label="Carro anterior"><svg class="icone" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
+          <button class="carrossel__seta vit-seta vit-seta--prox" type="button" data-vit-prox aria-label="Próximo carro"><svg class="icone" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
           <img class="vitrine__carro" src="assets/img/estoque/velar-1600.webp" alt="" width="1600" height="1200" loading="lazy" draggable="false">
         </div>
 
