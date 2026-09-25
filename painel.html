@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel | ponto AUTO</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d1017">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090C'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%231A56F0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..900&display=swap">
+<link rel="stylesheet" href="assets/css/painel.css">
+</head>
+<body>
+<script src="assets/js/icones.js"></script>
+
+<div class="painel">
+  <!-- ================================================================ LATERAL -->
+  <aside class="lateral" id="lateral">
+    <a class="marca" href="index.html"><span class="fino">ponto</span>AUTO<i></i></a>
+    <div class="lateral__loja">
+      <svg class="icone" aria-hidden="true"><use href="#i-store"></use></svg>
+      <span><b>ponto AUTO</b>Belo Horizonte · MG</span>
+    </div>
+    <nav class="nav" aria-label="Seções do painel">
+      <small>Loja</small>
+      <a href="#visao"><svg class="icone" aria-hidden="true"><use href="#i-layout-dashboard"></use></svg>Visão geral</a>
+      <a href="#estoque" data-perm="estoque.ver"><svg class="icone" aria-hidden="true"><use href="#i-car-front"></use></svg>Estoque<span class="conta" id="nav-estoque"></span></a>
+      <a href="#agenda"><svg class="icone" aria-hidden="true"><use href="#i-calendar-days"></use></svg>Agenda e rotinas</a>
+      <a href="#leads"><svg class="icone" aria-hidden="true"><use href="#i-message-circle"></use></svg>Leads<span class="conta" id="nav-leads"></span></a>
+      <small>Resultados</small>
+      <a href="#site" data-perm="site.ver"><svg class="icone" aria-hidden="true"><use href="#i-globe"></use></svg>Visitantes do site</a>
+      <a href="#metas" data-perm="metas.ver"><svg class="icone" aria-hidden="true"><use href="#i-target"></use></svg>Metas</a>
+      <small>Conta</small>
+      <a href="#equipe" data-perm="equipe.gerenciar"><svg class="icone" aria-hidden="true"><use href="#i-users"></use></svg>Equipe e acessos</a>
+    </nav>
+    <div class="lateral__pe">
+      <a href="index.html" target="_blank" rel="noopener"><svg class="icone" aria-hidden="true"><use href="#i-external-link"></use></svg>Ver o site</a>
+      <a href="entrar.html"><svg class="icone" aria-hidden="true"><use href="#i-log-out"></use></svg>Sair</a>
+    </div>
+  </aside>
+  <div class="veu" id="veu"></div>
+
+  <!-- ================================================================ PRINCIPAL -->
+  <div class="principal">
+    <header class="barra">
+      <button class="bt bt--fan bt--icone barra__menu" id="abre-lateral" type="button" aria-label="Abrir menu">
+        <svg class="icone" style="width:1.3rem;height:1.3rem" aria-hidden="true"><use href="#i-menu"></use></svg>
+      </button>
+      <label class="barra__busca entrada">
+        <svg class="icone" aria-hidden="true"><use href="#i-search"></use></svg>
+        <span class="oculto">Buscar no estoque</span>
+        <input type="search" id="busca-geral" placeholder="Buscar carro, lead ou compromisso">
+      </label>
+      <div class="barra__acoes">
+        <button class="bt bt--fan bt--icone sino" type="button" aria-label="Notificações" id="sino">
+          <svg class="icone" style="width:1.25rem;height:1.25rem" aria-hidden="true"><use href="#i-bell"></use></svg><i></i>
+        </button>
+        <label class="perfil" title="Ver o painel como outra pessoa da equipe">
+          <span class="av" id="eu-ini">CM</span>
+          <div><small>Ver como</small>
+            <select id="ver-como" aria-label="Ver o painel como"></select></div>
+        </label>
+      </div>
+    </header>
+
+    <main class="conteudo">
+
+      <!-- ============================================ VISÃO GERAL -->
+      <section class="tela" id="tela-visao" data-tela="visao">
+        <div class="titulo-tela">
+          <div>
+            <h1 id="saudacao">Bom dia</h1>
+            <p id="data-hoje"></p>
+          </div>
+          <div class="acoes">
+            <div class="periodo" role="group" aria-label="Período">
+              <button type="button" data-dias="7" aria-pressed="false">7 dias</button>
+              <button type="button" data-dias="30" aria-pressed="true">30 dias</button>
+              <button type="button" data-dias="90" aria-pressed="false">90 dias</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grade grade--5" id="kpis"></div>
+
+        <div class="grade grade--2-1">
+          <article class="cartao">
+            <div class="cartao__topo">
+              <div><h2>Visitas no site</h2><p id="sub-visitas">Pessoas por dia</p></div>
+            </div>
+            <div class="grafico"><canvas id="g-visitas" aria-label="Visitas por dia no site" role="img"></canvas></div>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Cliques no WhatsApp</h2><p>Ao vivo, direto do site</p></div>
+              <span class="pilula pilula--bom"><svg class="icone" aria-hidden="true"><use href="#i-activity"></use></svg>ao vivo</span></div>
+            <ul class="feed" id="feed-zap"></ul>
+          </article>
+        </div>
+
+        <div class="grade grade--1-1">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Do clique à venda</h2><p>Funil dos últimos 30 dias</p></div></div>
+            <ul class="funil" id="funil"></ul>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Carros mais vistos</h2><p>Visualizações da página do carro</p></div>
+              <a class="bt bt--fan" href="#estoque">Estoque<svg class="icone" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a></div>
+            <ul class="lista-barras" id="mais-vistos"></ul>
+          </article>
+        </div>
+
+        <div class="grade grade--1-2">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Hoje na agenda</h2><p id="sub-hoje"></p></div>
+              <a class="bt bt--fan" href="#agenda">Agenda<svg class="icone" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a></div>
+            <div class="dia-lista" id="agenda-hoje"></div>
+          </article>
+          <article class="cartao" data-perm="metas.ver">
+            <div class="cartao__topo"><div><h2>Vendas por mês</h2><p>Carros vendidos e meta</p></div>
+              <div class="legenda"><span><i style="background:var(--s1)"></i>Vendidos</span><span><i class="linha-tracejada"></i>Meta</span></div></div>
+            <div class="grafico grafico--baixo"><canvas id="g-vendas-visao" aria-label="Carros vendidos por mês" role="img"></canvas></div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================ ESTOQUE -->
+      <section class="tela" id="tela-estoque" data-tela="estoque">
+        <div class="titulo-tela">
+          <div><h1>Estoque</h1><p>O que aparece aqui aparece no site. Vendido sai sozinho da vitrine.</p></div>
+          <div class="acoes">
+            <button class="bt bt--pri" type="button" id="novo-carro" data-perm="estoque.editar"><svg class="icone" aria-hidden="true"><use href="#i-plus"></use></svg>Cadastrar veículo</button>
+          </div>
+        </div>
+        <div class="grade grade--4" id="kpis-estoque"></div>
+        <article class="cartao">
+          <div class="cartao__topo">
+            <div class="filtros-linha">
+              <label class="entrada"><svg class="icone" aria-hidden="true"><use href="#i-search"></use></svg><span class="oculto">Buscar</span><input type="search" id="est-busca" placeholder="Marca, modelo ou versão"></label>
+              <label><span class="oculto">Situação</span>
+                <select id="est-status"><option value="">Todas as situações</option><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></label>
+              <label><span class="oculto">Tipo</span>
+                <select id="est-tipo"><option value="">Todos os tipos</option><option>SUV</option><option>Picape</option><option>Sedan</option><option>Hatch</option></select></label>
+            </div>
+            <p class="nota-rodape" id="est-conta"></p>
+          </div>
+          <div class="tabela-caixa">
+            <table>
+              <thead><tr><th>Veículo</th><th class="num">Preço</th><th class="num">Km</th><th class="num">No pátio</th><th class="num">Visitas</th><th class="num">Cliques zap</th><th>Situação</th><th></th></tr></thead>
+              <tbody id="tabela-estoque"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============================================ AGENDA -->
+      <section class="tela" id="tela-agenda" data-tela="agenda">
+        <div class="titulo-tela">
+          <div><h1>Agenda e rotinas</h1><p>Test drive, visitas, entregas, vistorias e o dia a dia da loja.</p></div>
+          <div class="acoes">
+            <div class="periodo" role="group" aria-label="Visualização" id="cal-vista">
+              <button type="button" data-vista="dia" aria-pressed="false">Dia</button>
+              <button type="button" data-vista="semana" aria-pressed="false">Semana</button>
+              <button type="button" data-vista="mes" aria-pressed="true">Mês</button>
+            </div>
+            <label><span class="oculto">Agenda de</span><select id="cal-pessoa" class="sel-pessoa"></select></label>
+            <button class="bt bt--pri" type="button" id="novo-evento"><svg class="icone" aria-hidden="true"><use href="#i-plus"></use></svg>Novo compromisso</button></div>
+        </div>
+        <div class="agenda">
+          <article class="cartao">
+            <div class="cal-topo">
+              <h2 id="cal-titulo"></h2>
+              <div class="dir">
+                <button class="bt bt--sec bt--icone" type="button" id="cal-ant" aria-label="Mês anterior"><svg class="icone" aria-hidden="true"><use href="#i-chevron-left"></use></svg></button>
+                <button class="bt bt--sec" type="button" id="cal-hoje">Hoje</button>
+                <button class="bt bt--sec bt--icone" type="button" id="cal-prox" aria-label="Próximo mês"><svg class="icone" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+              </div>
+            </div>
+            <div id="cal-corpo"></div>
+            <div class="tipos" id="cal-tipos"></div>
+          </article>
+          <div class="grade" style="align-content:start">
+            <article class="cartao">
+              <div class="cartao__topo"><div><h2 id="dia-titulo">Hoje</h2><p id="dia-sub"></p></div></div>
+              <div class="dia-lista" id="dia-lista"></div>
+            </article>
+            <article class="cartao">
+              <div class="cartao__topo"><div><h2>Rotina de hoje</h2><p id="rotina-progresso"></p></div>
+                <button class="bt bt--sec" type="button" id="nova-rotina"><svg class="icone" aria-hidden="true"><use href="#i-plus"></use></svg>Tarefa</button></div>
+              <div class="barra-meta" style="margin:0 0 .8rem"><i id="rotina-barra" style="width:0"></i></div>
+              <div class="rotinas" id="rotinas"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================ LEADS -->
+      <section class="tela" id="tela-leads" data-tela="leads">
+        <div class="titulo-tela">
+          <div><h1>Leads</h1><p>Contatos do site entram sozinhos. Clique no cartão para editar, arraste para mudar a etapa.</p></div>
+          <div class="acoes">
+            <label><span class="oculto">Leads de</span><select id="leads-pessoa" class="sel-pessoa"></select></label>
+            <button class="bt bt--pri" type="button" id="novo-lead"><svg class="icone" aria-hidden="true"><use href="#i-user-plus"></use></svg>Novo lead</button>
+          </div>
+        </div>
+        <div class="quadro" id="quadro"></div>
+      </section>
+
+      <!-- ============================================ VISITANTES DO SITE -->
+      <section class="tela" id="tela-site" data-tela="site">
+        <div class="titulo-tela">
+          <div><h1>Visitantes do site</h1><p>Quem entrou, de onde veio, o que viu e se chamou no WhatsApp. Últimos 30 dias.</p></div>
+        </div>
+        <div class="grade grade--5" id="kpis-site"></div>
+        <div class="grade grade--2-1">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Visitantes e cliques no WhatsApp</h2><p>Dois gráficos, uma escala cada</p></div></div>
+            <div class="grafico grafico--baixo"><canvas id="g-visitantes" aria-label="Visitantes por dia" role="img"></canvas></div>
+            <div class="grafico grafico--baixo" style="margin-top:1rem"><canvas id="g-cliques" aria-label="Cliques no WhatsApp por dia" role="img"></canvas></div>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>De onde vieram</h2><p>Origem da visita</p></div></div>
+            <ul class="lista-barras" id="origens"></ul>
+            <div class="cartao__topo" style="margin:1.4rem 0 .9rem"><div><h2>Aparelho</h2><p>Por onde acessaram</p></div></div>
+            <ul class="lista-barras" id="aparelhos"></ul>
+          </article>
+        </div>
+        <div class="grade grade--1-1">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Localização</h2><p>Cidade de quem visitou</p></div>
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--acento)" aria-hidden="true"><use href="#i-map-pin"></use></svg></div>
+            <ul class="lista-barras" id="cidades"></ul>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Onde clicaram no WhatsApp</h2><p>Qual botão gerou a conversa</p></div></div>
+            <ul class="lista-barras" id="botoes-zap"></ul>
+          </article>
+        </div>
+        <article class="cartao">
+          <div class="cartao__topo"><div><h2>Horário de pico</h2><p>Visitas por dia da semana e hora</p></div></div>
+          <div class="calor" id="calor"></div>
+          <div class="escala" id="escala"></div>
+        </article>
+        <div class="grade grade--1-2">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Cookies</h2><p>Consentimento (LGPD)</p></div>
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--acento)" aria-hidden="true"><use href="#i-cookie"></use></svg></div>
+            <ul class="lista-barras" id="cookies"></ul>
+            <div class="tabela-caixa" style="margin-top:1rem">
+              <table><thead><tr><th>Cookie</th><th>Para quê</th><th>Dura</th></tr></thead><tbody id="tabela-cookies"></tbody></table>
+            </div>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Últimos visitantes</h2><p>Anônimos: sem nome, só o caminho que fizeram</p></div></div>
+            <div class="tabela-caixa">
+              <table><thead><tr><th>Quando</th><th>Cidade</th><th>Aparelho</th><th>Veio de</th><th>Viu</th><th>WhatsApp</th></tr></thead><tbody id="tabela-visitantes"></tbody></table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================ METAS -->
+      <section class="tela" id="tela-metas" data-tela="metas">
+        <div class="titulo-tela">
+          <div><h1>Metas</h1><p id="metas-sub"></p></div>
+        </div>
+        <div class="grade grade--4" id="aneis"></div>
+        <div class="grade grade--2-1">
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Vendas por mês</h2><p>Últimos 12 meses</p></div>
+              <div class="legenda"><span><i style="background:var(--s1)"></i>Vendidos</span><span><i class="linha-tracejada"></i>Meta</span></div></div>
+            <div class="grafico"><canvas id="g-vendas" aria-label="Vendas por mês nos últimos 12 meses" role="img"></canvas></div>
+          </article>
+          <article class="cartao">
+            <div class="cartao__topo"><div><h2>Ranking do mês</h2><p>Carros vendidos por vendedor</p></div>
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--s4)" aria-hidden="true"><use href="#i-award"></use></svg></div>
+            <ul class="lista-barras" id="ranking"></ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================ EQUIPE -->
+      <section class="tela" id="tela-equipe" data-tela="equipe">
+        <div class="titulo-tela">
+          <div><h1>Equipe e acessos</h1><p>Quem entra no painel e o que cada um pode fazer.</p></div>
+          <div class="acoes"><button class="bt bt--pri" type="button" id="convidar"><svg class="icone" aria-hidden="true"><use href="#i-user-plus"></use></svg>Convidar pessoa</button></div>
+        </div>
+        <article class="cartao">
+          <div class="tabela-caixa">
+            <table><thead><tr><th>Pessoa</th><th>Função</th><th>Pode</th><th>Último acesso</th><th>Situação</th><th></th></tr></thead><tbody id="tabela-equipe"></tbody></table>
+          </div>
+        </article>
+        <div class="aviso-demo" style="margin:0">
+          <svg class="icone" aria-hidden="true"><use href="#i-lock"></use></svg>
+          <span><b>Modo demonstração:</b> o painel abre sem senha. Na loja de verdade cada pessoa entra com o próprio e-mail, e o vendedor não vê faturamento nem apaga carro.</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ================================================================ MODAIS -->
+<div class="modal" id="modal-carro" role="dialog" aria-modal="true" aria-labelledby="modal-carro-titulo">
+  <form class="modal__caixa modal__caixa--largo" id="form-carro">
+    <div class="modal__topo"><h2 id="modal-carro-titulo">Cadastrar veículo</h2>
+      <button class="bt bt--fan bt--icone" type="button" data-fecha aria-label="Fechar"><svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
+    <input type="hidden" name="id">
+    <nav class="abas-form" aria-label="Partes do cadastro">
+      <a href="#fc-dados">Dados</a><a href="#fc-preco">Preço</a><a href="#fc-descricao">Descrição</a>
+      <a href="#fc-opcionais">Opcionais</a><a href="#fc-procedencia">Procedência</a><a href="#fc-fotos">Fotos</a>
+    </nav>
+
+    <fieldset class="bloco-form" id="fc-dados"><legend>Dados do veículo</legend>
+    <div class="form-grade form-grade--3">
+      <label class="campo"><span>Marca</span><input type="text" name="marca" required placeholder="Toyota"></label>
+      <label class="campo"><span>Modelo</span><input type="text" name="modelo" required placeholder="Corolla Cross"></label>
+      <label class="campo"><span>Versão</span><input type="text" name="versao" placeholder="XRE 2.0 Flex"></label>
+      <label class="campo"><span>Ano de fabricação</span><input type="number" name="ano" required min="1980" max="2027" placeholder="2022"></label>
+      <label class="campo"><span>Ano do modelo</span><input type="number" name="anoModelo" min="1980" max="2028" placeholder="2023"></label>
+      <label class="campo"><span>Quilometragem</span><input type="number" name="km" required min="0" placeholder="45000"></label>
+      <label class="campo"><span>Cor</span><input type="text" name="cor" list="lista-cores" placeholder="Prata"></label>
+      <label class="campo"><span>Portas</span><select name="portas"><option>2</option><option>3</option><option selected>4</option><option>5</option></select></label>
+      <label class="campo"><span>Final da placa</span><select name="finais"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>0</option></select></label>
+      <label class="campo"><span>Tipo</span><select name="carroceria"><option>SUV</option><option>Picape</option><option>Sedan</option><option>Hatch</option><option>Minivan</option><option>Cupê</option><option>Utilitário</option></select></label>
+      <label class="campo"><span>Câmbio</span><select name="cambio"><option>Automático</option><option>Manual</option><option>CVT</option><option>Automatizado</option></select></label>
+      <label class="campo"><span>Combustível</span><select name="combustivel"><option>Flex</option><option>Gasolina</option><option>Diesel</option><option>Híbrido</option><option>Elétrico</option><option>GNV</option></select></label>
+    </div>
+    <datalist id="lista-cores"><option>Branco</option><option>Preto</option><option>Prata</option><option>Cinza</option><option>Vermelho</option><option>Azul</option><option>Verde</option><option>Laranja</option><option>Bege</option><option>Marrom</option></datalist>
+    </fieldset>
+
+    <fieldset class="bloco-form" id="fc-preco"><legend>Preço e vitrine</legend>
+    <div class="form-grade form-grade--3">
+      <label class="campo"><span>Preço (R$)</span><input type="number" name="preco" required min="0" placeholder="129900"></label>
+      <label class="campo"><span>Preço antigo (opcional)</span><input type="number" name="precoDe" min="0" placeholder="Mostra o selo Baixou"></label>
+      <label class="campo"><span>Situação</span><select name="situacao"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></label>
+      <label class="campo"><span>Etiqueta na foto</span><input type="text" name="selo" maxlength="22" placeholder="Única dona, Baixa km..."></label>
+      <label class="campo"><span>Garantia</span><input type="text" name="garantia" placeholder="6 meses"></label>
+      <label class="campo campo--check"><span>Vitrine da home</span>
+        <span class="linha-check"><input type="checkbox" name="destaque"> Mostrar nos destaques da semana</span></label>
+    </div>
+    </fieldset>
+
+    <fieldset class="bloco-form" id="fc-descricao"><legend>Descrição</legend>
+      <label class="campo"><span>O que o vendedor diria sobre o carro</span>
+        <textarea name="resumo" rows="4" maxlength="600" placeholder="Ex.: Única dona, revisões em dia na concessionária, pneus novos. Carro de garagem, nunca rodou em estrada de terra."></textarea>
+        <small class="nota-rodape" id="resumo-conta">0 de 600 caracteres</small></label>
+    </fieldset>
+
+    <fieldset class="bloco-form" id="fc-opcionais"><legend>Itens e opcionais</legend>
+      <div class="chips-opc" id="opc-lista"></div>
+      <div class="opc-novo">
+        <input type="text" id="opc-novo" placeholder="Outro item (ex.: Teto solar)">
+        <button class="bt bt--sec" type="button" id="opc-add"><svg class="icone" aria-hidden="true"><use href="#i-plus"></use></svg>Adicionar</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="bloco-form" id="fc-procedencia"><legend>Procedência</legend>
+    <div class="form-grade form-grade--3">
+      <label class="campo"><span>Procedência</span><input type="text" name="h_procedencia" list="lista-procedencia" placeholder="Primeira dona, pessoa física"></label>
+      <label class="campo"><span>Laudo cautelar</span><select name="h_laudo"><option>Aprovado, sem apontamento</option><option>Aprovado com apontamento</option><option>Em análise</option></select></label>
+      <label class="campo"><span>Sinistro</span><select name="h_sinistro"><option>Nenhum registro</option><option>Pequena monta, reparado</option><option>Em verificação</option></select></label>
+      <label class="campo"><span>Revisões</span><input type="text" name="h_revisoes" placeholder="5 de 5 na concessionária"></label>
+      <label class="campo"><span>Chaves</span><select name="h_chaves"><option>2 chaves originais</option><option>1 chave original</option><option>1 original e 1 cópia</option></select></label>
+      <label class="campo"><span>Manual</span><select name="h_manual"><option value="">Não informar</option><option>Original, com carimbos</option><option>Original</option><option>Sem manual</option></select></label>
+    </div>
+    <datalist id="lista-procedencia"><option>Primeira dona, pessoa física</option><option>Primeira dona, pessoa jurídica</option><option>Segunda dona, pessoa física</option><option>Terceira dona, pessoa física</option></datalist>
+      <label class="campo"><span>Outros itens da procedência</span>
+        <textarea name="h_outros" rows="3" placeholder="Um por linha, no formato  Item: valor&#10;Pneus: os 4 trocados em 2026&#10;Correia: trocada em 2025, com nota"></textarea></label>
+    </fieldset>
+
+    <fieldset class="bloco-form" id="fc-fotos"><legend>Fotos</legend>
+      <span class="envio-fotos" tabindex="0" role="button"><svg class="icone" aria-hidden="true"><use href="#i-upload"></use></svg>
+        Arraste as fotos ou clique para escolher<small>Elas passam pelo estúdio: mesmo fundo, mesma luz</small>
+        <input type="file" accept="image/*" multiple hidden id="fotos-carro"></span>
+      <span class="previas" id="previas"></span>
+    </fieldset>
+    <div class="modal__pe">
+      <button class="bt bt--fan bt--perigo" type="button" data-excluir data-perm="estoque.excluir" style="margin-right:auto"><svg class="icone" aria-hidden="true"><use href="#i-trash-2"></use></svg>Excluir</button>
+      <button class="bt bt--sec" type="button" data-fecha>Cancelar</button>
+      <button class="bt bt--pri" type="submit"><svg class="icone" aria-hidden="true"><use href="#i-check"></use></svg>Salvar</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="modal-evento" role="dialog" aria-modal="true" aria-labelledby="modal-evento-titulo">
+  <form class="modal__caixa" id="form-evento">
+    <div class="modal__topo"><h2 id="modal-evento-titulo">Novo compromisso</h2>
+      <button class="bt bt--fan bt--icone" type="button" data-fecha aria-label="Fechar"><svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
+    <div class="form-grade">
+      <input type="hidden" name="id">
+      <label class="campo inteiro"><span>O quê</span><input type="text" name="titulo" required placeholder="Test drive do Compass"></label>
+      <label class="campo"><span>Tipo</span><select name="tipo" id="evento-tipo"></select></label>
+      <label class="campo"><span>Responsável</span><select name="quem" id="evento-quem"></select></label>
+      <label class="campo"><span>Dia</span><input type="date" name="data" required></label>
+      <label class="campo"><span>Hora</span><input type="time" name="hora" required value="10:00"></label>
+      <label class="campo inteiro"><span>Cliente ou observação</span><input type="text" name="obs" placeholder="Ex.: Paulo Henrique, vem com a esposa"></label>
+    </div>
+    <div class="modal__pe">
+      <button class="bt bt--fan bt--perigo" type="button" data-excluir style="margin-right:auto"><svg class="icone" aria-hidden="true"><use href="#i-trash-2"></use></svg>Excluir</button>
+      <button class="bt bt--sec" type="button" data-fecha>Cancelar</button>
+      <button class="bt bt--pri" type="submit"><svg class="icone" aria-hidden="true"><use href="#i-check"></use></svg>Salvar</button>
+    </div>
+  </form>
+</div>
+
+
+<div class="modal" id="modal-lead" role="dialog" aria-modal="true" aria-labelledby="modal-lead-titulo">
+  <form class="modal__caixa" id="form-lead">
+    <div class="modal__topo"><h2 id="modal-lead-titulo">Novo lead</h2><button class="bt bt--fan bt--icone" type="button" data-fecha aria-label="Fechar"><svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
+    <input type="hidden" name="id">
+    <div class="form-grade">
+      <label class="campo"><span>Nome</span><input type="text" name="nome" required placeholder="Nome do cliente"></label>
+      <label class="campo"><span>WhatsApp</span><input type="text" name="telefone" placeholder="(31) 99999-0000"></label>
+      <label class="campo inteiro"><span>Carro de interesse</span><select name="carro" id="lead-carro"></select></label>
+      <label class="campo"><span>Origem</span><select name="origem" id="lead-origem"></select></label>
+      <label class="campo"><span>Etapa</span><select name="etapa" id="lead-etapa"></select></label>
+      <label class="campo"><span>Responsável</span><select name="resp" id="lead-resp"></select></label>
+      <label class="campo"><span>Temperatura</span><select name="temp"><option>Quente</option><option>Morno</option><option>Frio</option></select></label>
+      <label class="campo inteiro"><span>Anotações</span><textarea name="obs" placeholder="Ex.: quer dar um Onix 2018 na troca, entrada de 30 mil"></textarea></label>
+    </div>
+    <div class="modal__pe">
+      <button class="bt bt--fan bt--perigo" type="button" data-excluir style="margin-right:auto"><svg class="icone" aria-hidden="true"><use href="#i-trash-2"></use></svg>Excluir</button>
+      <button class="bt bt--sec" type="button" data-fecha>Cancelar</button>
+      <button class="bt bt--pri" type="submit"><svg class="icone" aria-hidden="true"><use href="#i-check"></use></svg>Salvar</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="modal-rotina" role="dialog" aria-modal="true" aria-labelledby="modal-rotina-titulo">
+  <form class="modal__caixa" id="form-rotina" style="width:min(100%,460px)">
+    <div class="modal__topo"><h2 id="modal-rotina-titulo">Tarefa da rotina</h2><button class="bt bt--fan bt--icone" type="button" data-fecha aria-label="Fechar"><svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
+    <input type="hidden" name="i">
+    <div class="form-grade">
+      <label class="campo inteiro"><span>Tarefa</span><input type="text" name="texto" required placeholder="Ex.: Conferir leads da noite"></label>
+      <label class="campo"><span>Horário</span><input type="time" name="hora" required value="09:00"></label>
+      <label class="campo"><span>Quem faz</span><select name="quem" id="rotina-quem"></select></label>
+    </div>
+    <div class="modal__pe">
+      <button class="bt bt--fan bt--perigo" type="button" data-excluir style="margin-right:auto"><svg class="icone" aria-hidden="true"><use href="#i-trash-2"></use></svg>Excluir</button>
+      <button class="bt bt--sec" type="button" data-fecha>Cancelar</button>
+      <button class="bt bt--pri" type="submit"><svg class="icone" aria-hidden="true"><use href="#i-check"></use></svg>Salvar</button>
+    </div>
+  </form>
+</div>
+
+<div class="modal" id="modal-pessoa" role="dialog" aria-modal="true" aria-labelledby="modal-pessoa-titulo">
+  <form class="modal__caixa" id="form-pessoa" style="width:min(100%,720px)">
+    <div class="modal__topo"><h2 id="modal-pessoa-titulo">Pessoa da equipe</h2><button class="bt bt--fan bt--icone" type="button" data-fecha aria-label="Fechar"><svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg></button></div>
+    <input type="hidden" name="id">
+    <div class="form-grade">
+      <label class="campo"><span>Nome</span><input type="text" name="nome" required></label>
+      <label class="campo"><span>E-mail de acesso</span><input type="email" name="email" placeholder="nome@sualoja.com.br"></label>
+      <label class="campo"><span>Função</span><input type="text" name="funcao" placeholder="Consultor de vendas"></label>
+      <label class="campo"><span>Modelo de acesso</span><select name="perfil" id="pessoa-perfil"></select></label>
+    </div>
+    <p class="nota-rodape" style="margin:.2rem 0 .9rem">Todo mundo já tem a própria agenda e o próprio quadro de leads. Marque o que a pessoa pode ver e fazer além disso.</p>
+    <div class="permissoes" id="permissoes"></div>
+    <label class="rotina" style="margin-top:.6rem"><input type="checkbox" name="ativo" checked><span>Acesso ativo</span></label>
+    <div class="modal__pe">
+      <button class="bt bt--fan bt--perigo" type="button" data-excluir style="margin-right:auto"><svg class="icone" aria-hidden="true"><use href="#i-trash-2"></use></svg>Excluir</button>
+      <button class="bt bt--sec" type="button" data-fecha>Cancelar</button>
+      <button class="bt bt--pri" type="submit"><svg class="icone" aria-hidden="true"><use href="#i-check"></use></svg>Salvar</button>
+    </div>
+  </form>
+</div>
+
+<div class="aviso" id="aviso" role="status"><svg class="icone" aria-hidden="true"><use href="#i-circle-check"></use></svg><span></span></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>window.PAINEL = true</script>
+<script src="assets/js/dados.js"></script>
+<script src="assets/js/painel.js"></script>
+</body>
+</html>

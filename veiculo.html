@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veículo | ponto AUTO</title>
+<meta name="description" content="Ficha completa do veículo, com galeria, histórico de procedência, opcionais e simulação de financiamento.">
+<meta name="theme-color" content="#08090C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090C'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%231A56F0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..900&display=swap">
+<link rel="stylesheet" href="assets/css/estilo.css">
+</head>
+<body>
+<script src="assets/js/icones.js"></script>
+
+<a class="pular-para" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo" id="topo">
+  <button class="btn-menu" id="abre-menu" type="button" aria-expanded="false" aria-controls="menu">
+    <svg class="icone" aria-hidden="true"><use href="#i-menu"></use></svg>
+    Menu
+  </button>
+  <a class="marca" href="index.html" aria-label="ponto AUTO, página inicial">
+    <span class="fino">ponto</span>AUTO<i></i>
+  </a>
+  <div class="topo__acoes">
+    <a class="topo__tel" href="#" data-tel>
+      <svg class="icone" aria-hidden="true"><use href="#i-phone"></use></svg>
+      <span data-campo="telefone"></span>
+    </a>
+    <a class="btn btn--zap" href="#" data-zap="Olá! Estou vendo um carro no site e queria mais informações.">
+      <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+      <span>Falar agora</span>
+    </a>
+  </div>
+</header>
+
+<nav class="menu" id="menu" aria-hidden="true" aria-label="Menu principal" data-lenis-prevent>
+  <div class="menu__topo">
+    <a class="marca" href="index.html"><span class="fino">ponto</span>AUTO<i></i></a>
+    <button class="menu__fechar" id="fecha-menu" type="button">
+      Fechar <svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg>
+    </button>
+  </div>
+  <div class="menu__lista">
+    <a href="estoque.html">Estoque <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#destaques-secao">Destaques <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#simular">Financiamento <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#entregas-secao">Clientes <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#visite">Onde estamos <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+  </div>
+  <div class="menu__pe">
+    <p><strong data-campo="telefone"></strong>Segunda a sexta, 8h às 18h</p>
+    <p><strong data-campo="endereco"></strong><span data-campo="cidade"></span></p>
+    <p><strong data-campo="instagram"></strong>Estoque novo todo dia</p>
+  </div>
+</nav>
+
+<main id="conteudo" data-veiculo>
+
+  <section class="estoque-topo topo-veiculo" id="veiculo">
+    <div class="container">
+      <nav id="migalha" aria-label="Você está aqui" style="font-size:.78rem;color:rgba(255,255,255,.45);margin-bottom:.6rem"></nav>
+
+      <div id="aviso-vendido" hidden style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--raio);padding:1rem 1.2rem;margin-bottom:1.5rem;font-size:.9rem">
+        Esse carro já foi vendido. Abaixo está uma opção parecida do estoque atual.
+        <a href="estoque.html" style="text-decoration:underline">Ver tudo que está disponível</a>.
+      </div>
+
+      <h1 id="titulo"></h1>
+      <p id="versao"></p>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="veiculo-layout">
+
+        <div>
+          <!-- ============ GALERIA ============ -->
+          <div class="galeria">
+            <div class="galeria__principal">
+              <img id="foto-principal" src="" alt="" width="1600" height="1200">
+              <span class="galeria__contador" id="galeria-contador"></span>
+              <div class="galeria__nav">
+                <button type="button" id="foto-ant" aria-label="Foto anterior">
+                  <svg class="icone" aria-hidden="true"><use href="#i-chevron-left"></use></svg>
+                </button>
+                <button type="button" id="foto-prox" aria-label="Próxima foto">
+                  <svg class="icone" aria-hidden="true"><use href="#i-chevron-right"></use></svg>
+                </button>
+              </div>
+            </div>
+            <div class="galeria__tiras" id="galeria-tiras"></div>
+          </div>
+
+          <!-- ============ RESUMO ============ -->
+          <div style="margin-top:2.5rem">
+            <p class="t-etiqueta">O que o vendedor te diria</p>
+            <p id="resumo" class="lead" style="color:var(--texto);font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:500"></p>
+          </div>
+
+          <!-- ============ FICHA ============ -->
+          <div style="margin-top:2.5rem">
+            <h2 class="t-grande" style="margin-bottom:1.3rem">Cada número,<br><span class="t-fino">verificado</span></h2>
+            <dl class="tabela-ficha" id="ficha"></dl>
+          </div>
+
+          <!-- ============ HISTÓRICO ============ -->
+          <div style="margin-top:2.5rem">
+            <p class="t-etiqueta">Procedência</p>
+            <dl class="tabela-ficha" id="historico"></dl>
+            <p style="font-size:.82rem;color:var(--texto-suave);margin-top:.9rem">
+              O laudo cautelar completo fica disponível na loja e vai junto por
+              WhatsApp antes de qualquer visita, se você preferir.
+            </p>
+          </div>
+
+          <!-- ============ OPCIONAIS ============ -->
+          <div style="margin-top:2.5rem">
+            <p class="t-etiqueta">Itens e opcionais</p>
+            <ul class="lista-opcionais" id="opcionais"></ul>
+          </div>
+        </div>
+
+        <!-- ============ PAINEL DE PREÇO ============ -->
+        <aside class="painel-preco" id="painel"></aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUTRAS ESCOLHAS ============ -->
+  <section class="secao cinza">
+    <div class="container">
+      <div class="cabeca-secao rev">
+        <p class="t-etiqueta">No mesmo perfil</p>
+        <h2>Outras escolhas<br><span class="t-fino">que podem fazer sentido</span></h2>
+      </div>
+      <div class="grade-carros" id="relacionados"></div>
+    </div>
+  </section>
+</main>
+
+<div class="lupa" id="lupa" data-lenis-prevent>
+  <button type="button" id="fecha-lupa" aria-label="Fechar foto">
+    <svg class="icone" style="width:1.4rem;height:1.4rem" aria-hidden="true"><use href="#i-x"></use></svg>
+  </button>
+  <img id="lupa-img" src="" alt="">
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><span class="fino">ponto</span>AUTO<i></i></a>
+        <p style="max-width:34ch">
+          Seminovos checados, com laudo na mesa e garantia de 6 meses.
+          Doze anos vendendo carro na mesma esquina.
+        </p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <ul>
+          <li><a href="estoque.html">Estoque</a></li>
+          <li><a href="index.html#simular">Financiamento</a></li>
+          <li><a href="index.html#checagem">Como checamos</a></li>
+          <li><a href="index.html#entregas-secao">Clientes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#" data-zap="Olá! Quero avaliar meu carro na troca.">Avaliação na troca</a></li>
+          <li><a href="index.html#simular">Financiamento</a></li>
+          <li><a href="#" data-zap="Olá! Queria saber sobre a consignação.">Consignação</a></li>
+          <li><a href="#" data-zap="Olá! Queria saber sobre transferência e emplacamento.">Documentação</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul class="rodape__contato">
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-map-pin"></use></svg>
+            <span><span data-campo="endereco"></span><br><span data-campo="cidade"></span></span>
+          </li>
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-phone"></use></svg>
+            <a href="#" data-tel data-campo="telefone"></a>
+          </li>
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-clock"></use></svg>
+            <span data-campo="horario"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape__fim">
+      <p style="margin:0">
+        Site de demonstração. ponto AUTO é uma marca fictícia, criada para mostrar
+        o padrão de site que entregamos para lojas de veículos.
+        <a href="para-lojas.html" style="color:rgba(255,255,255,.7);text-decoration:underline">Saiba mais</a>
+      </p>
+      <p style="margin:0"><a href="entrar.html" style="text-decoration:underline">Área da loja</a> · &copy; 2026 ponto AUTO</p>
+    </div>
+  </div>
+</footer>
+
+<a class="zap-flutua" id="zap-flutua" href="#" data-zap="Olá! Estou vendo um carro no site e queria mais informações.">
+  <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+  <span>Falar no WhatsApp</span>
+</a>
+
+<script src="assets/js/dados.js"></script>
+<script src="assets/js/veiculo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

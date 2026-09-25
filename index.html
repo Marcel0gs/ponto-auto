@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ponto AUTO | Seminovos selecionados e checados</title>
+<meta name="description" content="Seminovos com laudo cautelar, procedência conferida e garantia de 6 meses. Estoque atualizado todo dia, avaliação do seu usado na hora e financiamento em até 60x.">
+<link rel="canonical" href="https://pontoauto.com.br/">
+<meta name="theme-color" content="#08090C">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ponto AUTO | Seminovos selecionados e checados">
+<meta property="og:description" content="Cada carro passa por 42 pontos de checagem antes de entrar no estoque. Laudo na mesa antes de você pedir.">
+<meta property="og:image" content="assets/img/hero/og.jpg">
+<meta property="og:locale" content="pt_BR">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090C'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%231A56F0'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,200..900&display=swap">
+<link rel="preload" as="image" imagesrcset="assets/img/hero/hero-960.webp 960w, assets/img/hero/hero-1600.webp 1600w, assets/img/hero/hero-2560.webp 2560w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="assets/css/estilo.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoDealer",
+  "name": "ponto AUTO",
+  "description": "Loja de seminovos com laudo cautelar e garantia de 6 meses.",
+  "telephone": "+553130000000",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. das Indústrias, 1400",
+    "addressLocality": "Belo Horizonte",
+    "addressRegion": "MG",
+    "addressCountry": "BR"
+  },
+  "openingHours": ["Mo-Fr 08:00-18:00", "Sa 08:00-13:00"]
+}
+</script>
+</head>
+<body class="home travado">
+<script src="assets/js/icones.js"></script>
+
+<a class="pular-para" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ======================================================================
+     ABERTURA
+     Dois fachos varrem a tela, a marca monta, a barra carrega e a cortina
+     abre ao meio. Roda uma vez por sessão, pula em qualquer clique ou scroll.
+     ====================================================================== -->
+<div class="abertura" id="abertura" aria-hidden="true">
+  <div class="abertura__metade abertura__metade--cima"></div>
+  <div class="abertura__metade abertura__metade--baixo"></div>
+  <div class="abertura__centro">
+    <span class="abertura__facho abertura__facho--esq"></span>
+    <span class="abertura__facho abertura__facho--dir"></span>
+    <p class="abertura__marca">
+      <span class="fino">ponto</span>
+      <span>AUTO</span>
+      <i class="abertura__ponto"></i>
+    </p>
+    <div class="abertura__barra"><i></i></div>
+  </div>
+</div>
+
+<!-- ====================================================================== -->
+<header class="topo" id="topo">
+  <button class="btn-menu" id="abre-menu" type="button" aria-expanded="false" aria-controls="menu">
+    <svg class="icone" aria-hidden="true"><use href="#i-menu"></use></svg>
+    Menu
+  </button>
+
+  <a class="marca" href="index.html" aria-label="ponto AUTO, página inicial">
+    <span class="fino">ponto</span>AUTO<i></i>
+  </a>
+
+  <div class="topo__acoes">
+    <a class="topo__tel" href="#" data-tel>
+      <svg class="icone" aria-hidden="true"><use href="#i-phone"></use></svg>
+      <span data-campo="telefone"></span>
+    </a>
+    <a class="btn btn--zap" href="#" data-zap="Olá! Vim pelo site e queria falar com um consultor.">
+      <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+      <span>Falar agora</span>
+    </a>
+  </div>
+</header>
+
+<nav class="menu" id="menu" aria-hidden="true" aria-label="Menu principal" data-lenis-prevent>
+  <div class="menu__topo">
+    <a class="marca" href="index.html"><span class="fino">ponto</span>AUTO<i></i></a>
+    <button class="menu__fechar" id="fecha-menu" type="button">
+      Fechar
+      <svg class="icone" aria-hidden="true"><use href="#i-x"></use></svg>
+    </button>
+  </div>
+  <div class="menu__lista">
+    <a href="estoque.html">Estoque <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="#destaques-secao">Destaques <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="#simular">Financiamento <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="#entregas-secao">Clientes <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="#visite">Onde estamos <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+  </div>
+  <div class="menu__pe">
+    <p><strong data-campo="telefone"></strong>Segunda a sexta, 8h às 18h</p>
+    <p><strong data-campo="endereco"></strong><span data-campo="cidade"></span></p>
+    <p><strong data-campo="instagram"></strong>Estoque novo todo dia</p>
+  </div>
+</nav>
+
+<main id="conteudo">
+
+  <!-- ====================================================================
+       HERO
+       Vídeo do carro no escuro sobre a foto em alta. O carro acende logo
+       depois da abertura, cresce e sobe com o scroll; a névoa anda em outra
+       velocidade e o título se abre para os lados. --p controla tudo.
+       ==================================================================== -->
+  <section class="hero">
+    <div class="hero__palco">
+      <img class="hero__midia hero__foto"
+           src="assets/img/hero/hero-1600.webp"
+           srcset="assets/img/hero/hero-960.webp 960w, assets/img/hero/hero-1600.webp 1600w, assets/img/hero/hero-2560.webp 2560w"
+           sizes="100vw" width="2560" height="1396" fetchpriority="high"
+           alt="Range Rover Velar cinza em galpão escuro, com névoa e piso molhado">
+      <video class="hero__midia hero__video" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"
+             data-video="assets/video/hero"></video>
+    </div>
+    <div class="hero__nevoa"></div>
+    <div class="hero__nevoa hero__nevoa--2"></div>
+    <div class="hero__brilho"></div>
+    <div class="hero__varredura"></div>
+    <div class="hero__vinheta"></div>
+
+    <div class="hero__conteudo">
+      <div class="hero__linha">
+        <div>
+          <h1 class="hero__titulo">
+            <span><b class="fraco">Carro certo</b></span>
+            <span><b>começa aqui.</b></span>
+          </h1>
+          <p class="hero__sub">
+            Cada carro entra no estoque com laudo cautelar aprovado, procedência conferida
+            e garantia de 6 meses. Você vê o laudo antes de perguntar por ele.
+          </p>
+        </div>
+
+        <a class="hero__legenda" href="veiculo.html?id=velar-rdynamic-2022">
+          <span class="ponto-vivo" aria-hidden="true"></span>
+          <span>
+            <small>Em estoque agora</small>
+            <b>Range Rover Velar R-Dynamic</b>
+            <small>2021/2022 · R$ 409.900</small>
+          </span>
+          <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+        </a>
+      </div>
+
+      <form class="busca" id="busca-hero" role="search" aria-label="Buscar no estoque">
+        <div class="busca__campo">
+          <svg class="icone" aria-hidden="true"><use href="#i-car-front"></use></svg>
+          <label class="visualmente-oculto" for="busca-tipo">Tipo de carro</label>
+          <select id="busca-tipo" name="carroceria">
+            <option value="">Qualquer tipo</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Hatch">Hatch</option>
+            <option value="Picape">Picape</option>
+          </select>
+        </div>
+        <div class="busca__campo">
+          <svg class="icone" aria-hidden="true"><use href="#i-award"></use></svg>
+          <label class="visualmente-oculto" for="busca-marca">Marca</label>
+          <select id="busca-marca" name="marca">
+            <option value="">Qualquer marca</option>
+          </select>
+        </div>
+        <div class="busca__campo">
+          <svg class="icone" aria-hidden="true"><use href="#i-banknote"></use></svg>
+          <label class="visualmente-oculto" for="busca-preco">Valor até</label>
+          <select id="busca-preco" name="ate">
+            <option value="">Qualquer valor</option>
+            <option value="100000">Até R$ 100 mil</option>
+            <option value="160000">Até R$ 160 mil</option>
+            <option value="250000">Até R$ 250 mil</option>
+            <option value="999999">Acima de R$ 250 mil</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">
+          <svg class="icone" aria-hidden="true"><use href="#i-search"></use></svg>
+          Ver carros
+        </button>
+      </form>
+    </div>
+
+    <div class="hero__rolagem" aria-hidden="true">
+      <span>Role</span>
+      <i></i>
+    </div>
+  </section>
+
+  <!-- ==================================================================== -->
+  <section class="secao--curta">
+    <ul class="numeros">
+      <li class="numero">
+        <b data-conta="12" data-depois=" anos">0</b>
+        <small>de loja aberta</small>
+      </li>
+      <li class="numero">
+        <b data-conta="1847">0</b>
+        <small>carros entregues</small>
+      </li>
+      <li class="numero">
+        <b data-conta="4.9" data-casas="1">0</b>
+        <small>no Google, 312 avaliações</small>
+      </li>
+      <li class="numero">
+        <b data-conta="42">0</b>
+        <small>pontos de checagem</small>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ====================================================================
+       FAIXA QUE DESLIZA COM A ROLAGEM
+       ==================================================================== -->
+  <div class="faixa-texto" data-parallax aria-hidden="true">
+    <div class="faixa-texto__trilho">
+      <span>Laudo na mesa</span><i></i>
+      <span>Garantia de 6 meses</span><i></i>
+      <span>Troca na hora</span><i></i>
+      <span>Até 60x</span><i></i>
+      <span>Estúdio próprio</span><i></i>
+      <span>Laudo na mesa</span><i></i>
+      <span>Garantia de 6 meses</span><i></i>
+      <span>Troca na hora</span><i></i>
+      <span>Até 60x</span><i></i>
+      <span>Estúdio próprio</span><i></i>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       DESTAQUES DA SEMANA: VITRINE COM ABAS
+       ==================================================================== -->
+  <section class="secao" id="destaques-secao">
+    <div class="container">
+      <div class="cabeca-secao cabeca-secao--dupla rev">
+        <div>
+          <p class="t-etiqueta">Estoque novo toda semana</p>
+          <h2>Destaques<br><span class="t-fino">da semana</span></h2>
+        </div>
+        <p class="lead" style="margin:0">
+          Escolha o tipo e passe pelos carros. Todo carro passa pelo nosso
+          estúdio antes de entrar no site: mesma luz, mesmo fundo, nada escondido.
+        </p>
+      </div>
+
+      <div class="vitrine rev rev--d1" id="vitrine">
+        <div class="vitrine__topo">
+          <div class="vitrine__abas" role="tablist" aria-label="Tipo de carro"></div>
+          <a class="link-seta" href="estoque.html">
+            Ver o estoque inteiro
+            <svg class="icone" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </div>
+
+        <div class="vitrine__palco" data-parallax>
+          <span class="vitrine__nome" aria-hidden="true"></span>
+          <span class="vitrine__selo"></span>
+          <span class="vitrine__contador" aria-live="polite"></span>
+          <img class="vitrine__carro" src="assets/img/estoque/velar-1600.webp" alt="" width="1600" height="1200" loading="lazy" draggable="false">
+        </div>
+
+        <div class="vitrine__rodape">
+          <div class="vitrine__info"></div>
+          <div class="vitrine__preco"></div>
+          <div class="vitrine__acoes">
+            <div class="vitrine__setas">
+              <button class="carrossel__seta" type="button" data-vit-ant aria-label="Carro anterior">
+                <svg class="icone" aria-hidden="true"><use href="#i-chevron-left"></use></svg>
+              </button>
+              <button class="carrossel__seta" type="button" data-vit-prox aria-label="Próximo carro">
+                <svg class="icone" aria-hidden="true"><use href="#i-chevron-right"></use></svg>
+              </button>
+            </div>
+            <a class="btn" href="#" data-ver-carro>
+              Ver este carro
+              <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+            </a>
+            <a class="btn btn--zap" href="#" data-zap-carro aria-label="Falar sobre este carro no WhatsApp">
+              <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       SIMULADOR
+       Conta de verdade, tabela Price. O botão leva a simulação pronta pro
+       WhatsApp, então o vendedor já recebe o lead com o número na mão.
+       ==================================================================== -->
+  <section class="secao cinza" id="simular">
+    <div class="container">
+      <div class="cabeca-secao rev">
+        <p class="t-etiqueta">Sem conversa de vendedor</p>
+        <h2>Faça as contas<br><span class="t-fino">antes de decidir</span></h2>
+        <p class="lead">
+          Escolhe o carro, mexe na entrada e vê a parcela na hora. O valor que
+          aparecer aqui é o valor que o consultor vai confirmar no WhatsApp.
+        </p>
+      </div>
+
+      <div class="simulador rev rev--d1" id="simulador">
+        <div>
+          <figure class="simulador__foto" id="sim-foto">
+            <img src="assets/img/estoque/compass-800.webp" alt="" width="800" height="600" loading="lazy">
+            <figcaption></figcaption>
+          </figure>
+
+          <div class="campo">
+            <label for="sim-carro">Carro</label>
+            <select id="sim-carro"></select>
+          </div>
+
+          <div class="campo">
+            <span class="rotulo">
+              Entrada
+              <b><span id="sim-valor-entrada">R$ 0</span> · <span id="sim-pct-entrada">0%</span></b>
+            </span>
+            <input type="range" id="sim-entrada" min="0" max="100" step="500" aria-label="Valor da entrada">
+            <div class="faixa-limites">
+              <span id="sim-min">R$ 0</span>
+              <span id="sim-max">R$ 0</span>
+            </div>
+          </div>
+
+          <div class="campo">
+            <span class="rotulo">Prazo</span>
+            <div class="chips" role="group" aria-label="Prazo em meses">
+              <button class="chip" type="button" data-prazo="24" aria-pressed="false">24x</button>
+              <button class="chip" type="button" data-prazo="36" aria-pressed="false">36x</button>
+              <button class="chip" type="button" data-prazo="48" aria-pressed="true">48x</button>
+              <button class="chip" type="button" data-prazo="60" aria-pressed="false">60x</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="resultado">
+          <small>Sua parcela fica em</small>
+          <p class="parcela" id="sim-parcela">R$ 0</p>
+          <ul>
+            <li><span>Valor financiado</span><b id="sim-financiado">R$ 0</b></li>
+            <li><span>Prazo</span><b id="sim-prazo">48x</b></li>
+            <li><span>Total pago</span><b id="sim-total">R$ 0</b></li>
+          </ul>
+          <a class="btn btn--zap btn--bloco" id="sim-zap" href="#">
+            <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            Confirmar no WhatsApp
+          </a>
+          <p class="aviso">
+            Simulação com taxa de 1,69% ao mês, a título de exemplo. A taxa final
+            depende da análise do banco, do seu perfil e do ano do veículo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VITRINE ESCURA: O CARRO EM DESTAQUE
+       O momento "RAM 3500" do vídeo de referência. Nome gigante digitado
+       letra por letra quando a seção entra na tela, preço digitado depois.
+       ==================================================================== -->
+  <section class="vitrine-escura" id="destaque-escuro" data-parallax>
+    <div class="vitrine-escura__fundo">
+      <img src="assets/img/hero/ram-noite-1920.webp"
+           srcset="assets/img/hero/ram-noite-1000.webp 1000w, assets/img/hero/ram-noite-1920.webp 1920w"
+           sizes="100vw" width="1920" height="1280" loading="lazy"
+           alt="RAM 1500 TRX cinza estacionada ao anoitecer">
+    </div>
+    <div class="container">
+      <p class="t-etiqueta">Chegou esta semana</p>
+      <p class="vitrine-escura__nome" aria-label="RAM TRX">
+        <span class="digita" data-texto="RAM TRX" aria-hidden="true"><span class="digita__fantasma">RAM TRX</span><span class="digita__texto"></span></span>
+      </p>
+      <div class="vitrine-escura__linha">
+        <div class="vitrine-escura__preco">
+          <small>2022/2022 · 21.400 km</small>
+          <b aria-label="R$ 689.900"><span class="digita" data-texto="R$ 689.900" aria-hidden="true"><span class="digita__fantasma">R$ 689.900</span><span class="digita__texto"></span></span></b>
+          <div class="vitrine-escura__specs">
+            <span><svg class="icone" aria-hidden="true"><use href="#i-zap"></use></svg>702 cv, V8 6.2 Supercharged</span>
+            <span><svg class="icone" aria-hidden="true"><use href="#i-gauge"></use></svg>0 a 100 km/h em 3,7 s</span>
+            <span><svg class="icone" aria-hidden="true"><use href="#i-shield-check"></use></svg>Laudo aprovado</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+          <a class="btn btn--g" href="veiculo.html?id=ram-trx-2022">
+            Ver este veículo
+            <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="btn btn--vazado btn--g" href="#" data-zap="Olá! Vi a RAM TRX no site e queria agendar para ver de perto.">
+            <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            Agendar para ver
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       COMO COMPRAR: os passos entram da esquerda para a direita
+       ==================================================================== -->
+  <section class="secao" id="como-comprar">
+    <div class="container">
+      <div class="cabeca-secao rev">
+        <p class="t-etiqueta">Do primeiro contato à chave na mão</p>
+        <h2>Quatro passos<br><span class="t-fino">e o carro é seu</span></h2>
+      </div>
+
+      <div class="passos">
+        <div class="passo">
+          <span class="passo__bolha"><svg class="icone" aria-hidden="true"><use href="#i-search"></use></svg></span>
+          <div>
+            <h3>Escolhe no site</h3>
+            <p>Estoque com foto de estúdio, laudo e ficha completa. Nada de "consulte disponibilidade".</p>
+          </div>
+        </div>
+        <div class="passo">
+          <span class="passo__bolha"><svg class="icone" aria-hidden="true"><use href="#i-eye"></use></svg></span>
+          <div>
+            <h3>Vê de perto ou por vídeo</h3>
+            <p>Vem na loja ou pede uma chamada de vídeo. A gente mostra tudo.</p>
+          </div>
+        </div>
+        <div class="passo">
+          <span class="passo__bolha"><svg class="icone" aria-hidden="true"><use href="#i-hand-coins"></use></svg></span>
+          <div>
+            <h3>Fecha as condições</h3>
+            <p>Avaliamos o seu usado na troca e mandamos a análise para três bancos ao mesmo tempo.</p>
+          </div>
+        </div>
+        <div class="passo">
+          <span class="passo__bolha"><svg class="icone" aria-hidden="true"><use href="#i-key-round"></use></svg></span>
+          <div>
+            <h3>Leva no mesmo dia</h3>
+            <p>Transferência, seguro e emplacamento saem daqui. Você assina e vai embora dirigindo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       QUEBRA ESCURA COM PARALLAX: A CHECAGEM
+       ==================================================================== -->
+  <section class="quebra" id="checagem" data-parallax>
+    <div class="quebra__fundo">
+      <img src="assets/img/hero/oficina-quebra.webp" alt="Carro sobre o elevador na oficina de checagem" loading="lazy" width="1800" height="1005">
+    </div>
+    <div class="container">
+      <p class="t-etiqueta rev">O que acontece antes da vitrine</p>
+      <h2 class="quebra__titulo rev rev--d1">
+        Cada carro passa por <em>42</em> pontos de checagem
+      </h2>
+      <p class="lead rev rev--d1" style="max-width:52ch">
+        Carro que reprova não entra no estoque, vai embora no mesmo caminhão que
+        trouxe. É por isso que a loja consegue dar 6 meses de garantia sem medo.
+      </p>
+
+      <ul class="checagens rev rev--d2">
+        <li><svg class="icone" aria-hidden="true"><use href="#i-scan-line"></use></svg>Laudo cautelar completo</li>
+        <li><svg class="icone" aria-hidden="true"><use href="#i-file-text"></use></svg>Histórico de sinistro e leilão</li>
+        <li><svg class="icone" aria-hidden="true"><use href="#i-palette"></use></svg>Medição de pintura nas 11 peças</li>
+        <li><svg class="icone" aria-hidden="true"><use href="#i-wrench"></use></svg>Suspensão, freio e embreagem</li>
+        <li><svg class="icone" aria-hidden="true"><use href="#i-zap"></use></svg>Diagnóstico eletrônico</li>
+        <li><svg class="icone" aria-hidden="true"><use href="#i-route"></use></svg>Teste em estrada de 30 km</li>
+      </ul>
+
+      <a class="btn btn--vazado btn--g rev rev--d3" href="estoque.html">
+        Ver os carros aprovados
+        <svg class="icone" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       ENTREGAS
+       ==================================================================== -->
+  <section class="secao cinza" id="entregas-secao">
+    <div class="container">
+      <div class="cabeca-secao cabeca-secao--dupla rev">
+        <div>
+          <p class="t-etiqueta">1.847 entregas até aqui</p>
+          <h2>Chaves entregues,<br><span class="t-fino">clientes felizes</span></h2>
+        </div>
+        <p class="lead" style="margin:0">
+          Nota 4,9 no Google com 312 avaliações. A foto da entrega só sai do
+          celular do cliente, nunca do banco de imagens.
+        </p>
+      </div>
+
+      <div class="entregas" id="entregas"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VISITE A LOJA
+       ==================================================================== -->
+  <section class="secao" id="visite">
+    <div class="container">
+      <div class="visite rev">
+        <div class="visite__texto">
+          <p class="t-etiqueta">Onde estamos</p>
+          <h2>Venha ver<br><span class="t-fino">de perto</span></h2>
+          <p class="lead" style="margin:1.4rem 0 1.8rem">
+            Pátio coberto, todos os carros com a chave na recepção. Você abre,
+            liga e anda com qualquer um deles sem precisar marcar hora.
+          </p>
+
+          <ul style="display:grid;gap:1rem;margin-bottom:2rem">
+            <li style="display:flex;gap:.8rem;align-items:flex-start">
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--acento);margin-top:.2rem" aria-hidden="true"><use href="#i-map-pin"></use></svg>
+              <span><b data-campo="endereco"></b><br><span style="color:var(--texto-suave)" data-campo="cidade"></span></span>
+            </li>
+            <li style="display:flex;gap:.8rem;align-items:flex-start">
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--acento);margin-top:.2rem" aria-hidden="true"><use href="#i-clock"></use></svg>
+              <span><b>Horário</b><br><span style="color:var(--texto-suave)" data-campo="horario"></span></span>
+            </li>
+            <li style="display:flex;gap:.8rem;align-items:flex-start">
+              <svg class="icone" style="width:1.3rem;height:1.3rem;color:var(--acento);margin-top:.2rem" aria-hidden="true"><use href="#i-phone"></use></svg>
+              <span><b data-campo="telefone"></b><br><span style="color:var(--texto-suave)">Ligação e WhatsApp no mesmo número</span></span>
+            </li>
+          </ul>
+
+          <div style="display:flex;gap:.7rem;flex-wrap:wrap">
+            <a class="btn btn--zap" href="#" data-zap="Olá! Queria agendar uma visita na loja.">
+              <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+              Agendar visita
+            </a>
+            <a class="btn btn--vazado-escuro" href="estoque.html">Ver estoque</a>
+          </div>
+        </div>
+
+        <figure class="mapa">
+          <iframe src="https://maps.google.com/maps?q=Savassi,+Belo+Horizonte+-+MG&z=15&output=embed"
+                  title="Mapa da loja em Belo Horizonte" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       CHAMADA FINAL
+       ==================================================================== -->
+  <section class="quebra" data-parallax style="min-height:auto;padding-block:clamp(4rem,10vw,7rem)">
+    <div class="quebra__fundo">
+      <img src="assets/img/hero/silhueta.webp" alt="" aria-hidden="true" loading="lazy" width="1600" height="1067">
+    </div>
+    <div class="container" style="text-align:center">
+      <h2 class="rev" style="max-width:18ch;margin-inline:auto">Achou o seu?<br><span class="t-fino">Fale com a gente hoje</span></h2>
+      <p class="lead rev rev--d1" style="margin:1.3rem auto 2rem;max-width:48ch">
+        Responde em minutos no horário comercial. Manda o modelo que você quer
+        ou o carro que tem para dar na troca.
+      </p>
+      <div class="rev rev--d2" style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn--zap btn--g" href="#" data-zap="Olá! Vim pelo site e queria falar sobre um carro.">
+          <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+          Chamar no WhatsApp
+        </a>
+        <a class="btn btn--vazado btn--g" href="#" data-tel>
+          <svg class="icone" aria-hidden="true"><use href="#i-phone"></use></svg>
+          <span data-campo="telefone"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====================================================================== -->
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape__grade">
+      <div>
+        <a class="marca" href="index.html"><span class="fino">ponto</span>AUTO<i></i></a>
+        <p style="max-width:34ch">
+          Seminovos checados, com laudo na mesa e garantia de 6 meses.
+          Doze anos vendendo carro na mesma esquina.
+        </p>
+      </div>
+      <div>
+        <h4>Navegar</h4>
+        <ul>
+          <li><a href="estoque.html">Estoque</a></li>
+          <li><a href="#destaques-secao">Destaques</a></li>
+          <li><a href="#simular">Financiamento</a></li>
+          <li><a href="#checagem">Como checamos</a></li>
+          <li><a href="#entregas-secao">Clientes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#" data-zap="Olá! Quero avaliar meu carro na troca.">Avaliação na troca</a></li>
+          <li><a href="#simular">Financiamento</a></li>
+          <li><a href="#" data-zap="Olá! Queria saber sobre a consignação.">Consignação</a></li>
+          <li><a href="#" data-zap="Olá! Queria saber sobre transferência e emplacamento.">Documentação</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul class="rodape__contato">
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-map-pin"></use></svg>
+            <span><span data-campo="endereco"></span><br><span data-campo="cidade"></span></span>
+          </li>
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-phone"></use></svg>
+            <a href="#" data-tel data-campo="telefone"></a>
+          </li>
+          <li>
+            <svg class="icone" aria-hidden="true"><use href="#i-clock"></use></svg>
+            <span data-campo="horario"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rodape__fim">
+      <p style="margin:0">
+        Site de demonstração. ponto AUTO é uma marca fictícia, criada para mostrar
+        o padrão de site que entregamos para lojas de veículos.
+        <a href="para-lojas.html" style="color:rgba(255,255,255,.7);text-decoration:underline">Saiba mais</a>
+      </p>
+      <p style="margin:0"><a href="entrar.html" style="text-decoration:underline">Área da loja</a> · &copy; 2026 ponto AUTO</p>
+    </div>
+  </div>
+</footer>
+
+<a class="zap-flutua" id="zap-flutua" href="#" data-zap="Olá! Vim pelo site e queria falar com um consultor.">
+  <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+  <span>Falar no WhatsApp</span>
+</a>
+
+<script src="assets/js/dados.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
