@@ -2009,3 +2009,24 @@ html.lenis, html.lenis body { height: auto; }
 .topo-veiculo__marca { font-size: .5em; letter-spacing: .14em; color: var(--acento-claro); font-weight: 700; }
 .topo-veiculo #versao { margin: .4rem 0 0; color: rgba(255,255,255,.62); font-size: .95rem; }
 .topo-veiculo + .secao { padding-top: 1.4rem; }
+
+/* ==========================================================================
+   27. TELA DE TOQUE: leve para rolar liso
+   Sem desfoque de vidro (backdrop-filter repinta tudo que passa por baixo a
+   cada quadro), sem névoa e brilho animados e sem transform ligado à rolagem.
+   Medido com processador 4x mais lento: os quadros acima de 50 ms zeram.
+   ========================================================================== */
+.toque * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.toque .topo.encolheu { background: #fff; }
+.toque .busca { background: rgba(20, 23, 30, .92); }
+.toque .selo { background: rgba(8, 9, 12, .88); }
+.toque .hero__nevoa, .toque .hero__brilho { animation: none; transform: none; }
+.toque .hero__brilho { filter: none; background: radial-gradient(circle, rgba(26, 86, 240, .22), transparent 60%); }
+.toque .hero__midia { will-change: auto; transform: none; }
+.toque .hero__titulo b { translate: none; }
+.toque .vitrine__nome, .toque .vitrine-escura__nome { transform: none; will-change: auto; }
+/* no toque a faixa anda sozinha (animação que a GPU toca, lisa); o texto vem duplicado, então -50% emenda */
+.toque .faixa-texto__trilho { transform: none; animation: faixa-anda 38s linear infinite; }
+@keyframes faixa-anda { from { translate: 0 0; } to { translate: -50% 0; } }
+.toque .quebra__fundo img, .toque .vitrine-escura__fundo img, .toque .foto-parallax img { transform: none; will-change: auto; }
+.toque .quebra__fundo, .toque .vitrine-escura__fundo { inset: 0; }

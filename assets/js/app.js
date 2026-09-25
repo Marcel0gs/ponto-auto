@@ -26,6 +26,12 @@
   'use strict';
 
   const paradoQuieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Tela de toque (celular, tablet): lá a rolagem roda fora do JavaScript, e
+     todo efeito recalculado a cada quadro da rolagem (parallax) chega
+     atrasado e anda aos pulinhos, a sensação de 15 Hz. Nesses aparelhos o
+     parallax e o desfoque de vidro saem; o resto das animações fica. */
+  const toque = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (toque) document.documentElement.classList.add('toque');
   const gravando = window.__gravacao === true;   // ligado pelo gravador do vídeo de demonstração
   const $ = (s, e = document) => e.querySelector(s);
   const $$ = (s, e = document) => Array.from(e.querySelectorAll(s));
@@ -209,8 +215,8 @@
   /* Qualquer elemento com data-parallax recebe --p de 0 (entrando por baixo)
      a 1 (saindo por cima) enquanto cruza a tela. O CSS decide o que fazer. */
   function parallax() {
-    const alvos = $$('[data-parallax]');
-    if (!alvos.length || paradoQuieto) return;
+    const alvos = $('[data-parallax]');
+    if (!alvos.length || paradoQuieto || toque) return;
 
     let medidas = [];
     const medir = () => {
@@ -241,7 +247,7 @@
      partir do topo da página, para o carro já começar parado. */
   function parallaxHero() {
     const hero = $('.hero');
-    if (!hero || paradoQuieto) return;
+    if (!hero || paradoQuieto || toque) return;
     let altura = hero.offsetHeight;
     const pintar = () => {
       const p = Math.min(1, Math.max(0, window.scrollY / altura));
