@@ -305,9 +305,14 @@ p:last-child { margin-bottom: 0; }
 
 /* ==========================================================================
    4. ABERTURA (a animação de entrada)
-   Cortina preta em duas metades que se abrem depois da marca montar.
+   O painel do carro acendendo na partida. Uma única variável animada, --v
+   (a velocidade, de 0 a 240), move o ponteiro, enche o arco e escreve o
+   número. Depois a cortina preta abre ao meio com um facho de farol.
    Roda uma vez por sessão. Some na hora com prefers-reduced-motion.
+   Navegador sem @property: o ponteiro fica no zero e o resto acontece igual.
    ========================================================================== */
+
+@property --v { syntax: "<integer>"; initial-value: 0; inherits: true; }
 
 .abertura {
   position: fixed; inset: 0; z-index: 200;
@@ -326,79 +331,115 @@ p:last-child { margin-bottom: 0; }
 .abertura__centro {
   position: absolute; inset: 0;
   display: grid; place-items: center;
-  transition: opacity .4s ease;
+  transition: opacity .35s ease, transform .6s cubic-bezier(.76, 0, .24, 1);
 }
 
-/* os dois facho de farol que varrem a tela */
-.abertura__facho {
-  position: absolute; top: 50%; width: 46vw; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--acento-claro), transparent);
+.abertura__painel {
+  --v: 0;
+  position: relative;
+  width: min(64vw, 300px);
+  display: grid; justify-items: center;
+}
+.abertura.roda .abertura__painel {
+  /* acelera até 240 e fica lá */
+  animation: partida 1.3s .5s both;
+}
+@keyframes partida {
+  0%   { --v: 0; animation-timing-function: cubic-bezier(.5, 0, .2, 1); }
+  100% { --v: 240; }
+}
+
+.abertura__mostrador {
+  width: 100%; height: auto; overflow: visible;
+  opacity: 0; transform: scale(.9);
+}
+.abertura.roda .abertura__mostrador { animation: liga-painel .7s cubic-bezier(.16, 1, .3, 1) .05s forwards; }
+@keyframes liga-painel { to { opacity: 1; transform: none; } }
+
+.abertura__trilho { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: 3; }
+.abertura__faixa { fill: none; stroke: #ff4d4d; stroke-width: 3; opacity: .75; }
+.abertura__arco {
+  fill: none; stroke: var(--acento-claro); stroke-width: 3;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--v) * 100 / 240);
+  filter: drop-shadow(0 0 5px var(--acento));
+}
+
+.abertura__marcas line { stroke: rgba(255, 255, 255, .38); stroke-width: 1.4; }
+.abertura__marcas line.m { stroke: #fff; stroke-width: 2.4; }
+.abertura__numeros text {
+  fill: rgba(255, 255, 255, .55);
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  text-anchor: middle; dominant-baseline: central;
+}
+
+/* gira em volta do centro do mostrador (o 0,0 do viewBox) */
+.abertura__ponteiro { rotate: calc(var(--v) * 1.125deg - 135deg); }
+.abertura__ponteiro path { fill: #fff; filter: drop-shadow(0 0 4px rgba(95, 212, 255, .8)); }
+.abertura__ponteiro circle { fill: var(--tinta); stroke: #fff; stroke-width: 2; }
+/* no fim do curso o ponteiro treme de leve enquanto a cortina espera o vídeo */
+.abertura.roda .abertura__tremor { animation: marcha-lenta .09s linear 1.8s infinite alternate; }
+@keyframes marcha-lenta { from { rotate: -.8deg; } to { rotate: .8deg; } }
+
+.abertura__velocidade {
+  position: absolute; top: 56%; left: 50%; translate: -50% 0;
+  display: grid; justify-items: center; line-height: 1;
+  color: #fff;
   opacity: 0;
-  filter: blur(.5px);
 }
-.abertura__facho--esq { left: 0; transform: translateX(-100%); }
-.abertura__facho--dir { right: 0; transform: translateX(100%); }
-
-.abertura.roda .abertura__facho--esq { animation: facho-esq 1.1s cubic-bezier(.16, 1, .3, 1) .1s forwards; }
-.abertura.roda .abertura__facho--dir { animation: facho-dir 1.1s cubic-bezier(.16, 1, .3, 1) .1s forwards; }
-@keyframes facho-esq {
-  0% { opacity: 0; transform: translateX(-100%); }
-  35% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(10%); }
+.abertura.roda .abertura__velocidade { animation: liga-painel .5s ease .35s forwards; }
+.abertura__velocidade b {
+  font-size: clamp(1.9rem, 7vw, 2.9rem); font-weight: 800; font-stretch: 88%;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
 }
-@keyframes facho-dir {
-  0% { opacity: 0; transform: translateX(100%); }
-  35% { opacity: 1; }
-  100% { opacity: 0; transform: translateX(-10%); }
+.abertura__velocidade b::before { counter-reset: vel var(--v); content: counter(vel); }
+.abertura__velocidade small {
+  margin-top: .3rem;
+  font-size: .62rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .5);
 }
 
 .abertura__marca {
-  position: relative;
   display: flex; align-items: baseline; gap: .14em;
-  font-size: clamp(2rem, 8vw, 4.6rem);
-  font-weight: 800; font-stretch: 92%;
-  letter-spacing: -.03em;
+  margin-top: -.4rem;
+  font-size: clamp(1.15rem, 4.2vw, 1.6rem);
+  font-weight: 800; font-stretch: 92%; letter-spacing: -.03em;
   color: #fff;
+  opacity: 0;
 }
-.abertura__marca span {
-  display: inline-block;
-  opacity: 0; transform: translateY(.5em);
-}
-.abertura.roda .abertura__marca span { animation: sobe-letra .8s cubic-bezier(.16, 1, .3, 1) forwards; }
-.abertura.roda .abertura__marca span:nth-child(1) { animation-delay: .55s; }
-.abertura.roda .abertura__marca span:nth-child(2) { animation-delay: .68s; }
-@keyframes sobe-letra {
-  to { opacity: 1; transform: translateY(0); }
-}
+.abertura.roda .abertura__marca { animation: liga-painel .6s ease .6s forwards; }
 .abertura__marca .fino { font-weight: 300; font-stretch: 105%; opacity: .78; }
 
+/* o ponto da marca acende como a luz de "pronto" do painel */
 .abertura__ponto {
-  width: .19em; height: .19em; border-radius: 50%;
-  background: var(--acento-claro);
-  transform: scale(0); opacity: 0;
+  width: .2em; height: .2em; border-radius: 50%;
+  background: rgba(255, 255, 255, .2);
   align-self: flex-end; margin-bottom: .12em;
 }
-.abertura.roda .abertura__ponto { animation: pisca-ponto .7s cubic-bezier(.34, 1.56, .64, 1) .35s forwards; }
-@keyframes pisca-ponto {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.5); opacity: 1; box-shadow: 0 0 26px 6px var(--acento); }
-  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 14px 2px rgba(75, 123, 255, .5); }
+.abertura.roda .abertura__ponto { animation: pronto .6s cubic-bezier(.34, 1.56, .64, 1) 2.2s forwards; }
+@keyframes pronto {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.6); background: var(--acento-claro); box-shadow: 0 0 22px 6px var(--acento); }
+  100% { transform: scale(1); background: var(--acento-claro); box-shadow: 0 0 12px 2px rgba(75, 123, 255, .55); }
 }
 
-.abertura__barra {
-  position: absolute; bottom: 18%; left: 50%; transform: translateX(-50%);
-  width: min(190px, 44vw); height: 2px;
-  background: rgba(255, 255, 255, .14); overflow: hidden; border-radius: 2px;
+/* facho de farol: nasce no meio quando a cortina abre e varre para os lados */
+.abertura__facho {
+  position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
+  translate: 0 -50%;
+  background: linear-gradient(90deg, transparent, var(--brilho) 30%, #fff 50%, var(--brilho) 70%, transparent);
+  box-shadow: 0 0 18px 4px rgba(95, 212, 255, .55), 0 0 60px 12px rgba(26, 86, 240, .35);
+  transform: scaleX(0); opacity: 0;
 }
-.abertura__barra i {
-  position: absolute; inset: 0; transform-origin: left;
-  background: var(--acento-claro); transform: scaleX(0);
+.abertura.abriu .abertura__facho { animation: facho .95s cubic-bezier(.16, 1, .3, 1) forwards; }
+@keyframes facho {
+  0% { transform: scaleX(0); opacity: 1; }
+  40% { opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
 }
-.abertura.roda .abertura__barra i { animation: carrega 1.5s cubic-bezier(.4, 0, .2, 1) .35s forwards; }
-@keyframes carrega { to { transform: scaleX(1); } }
 
 /* estado final: cortina aberta */
-.abertura.abriu .abertura__centro { opacity: 0; }
+.abertura.abriu .abertura__centro { opacity: 0; transform: scale(1.06); }
 .abertura.abriu .abertura__metade--cima { transform: translateY(-100%); }
 .abertura.abriu .abertura__metade--baixo { transform: translateY(100%); }
 

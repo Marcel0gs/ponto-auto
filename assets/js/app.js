@@ -95,11 +95,12 @@
       setTimeout(() => tela.remove(), 1200);
     };
 
-    // a cortina só abre com o vídeo pronto (no máximo 2 s além dos 2,6 s da marca)
+    // a cortina só abre com o vídeo pronto (no máximo 2 s além dos 2,7 s do
+    // painel: ponteiro chegando no 240 em 1,8 s e a luz de pronto acendendo em 2,2 s)
     let t = setTimeout(() => {
       t = setTimeout(encerrar, 2000);
       videoPronto.then(() => { clearTimeout(t); encerrar(); });
-    }, 2600);
+    }, 2700);
     const pular = () => { clearTimeout(t); encerrar(); };
     tela.addEventListener('click', pular);
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape' || e.key === ' ') pular(); }, { once: true });

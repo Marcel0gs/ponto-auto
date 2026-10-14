@@ -49,21 +49,37 @@
 
 <!-- ======================================================================
      ABERTURA
-     Dois fachos varrem a tela, a marca monta, a barra carrega e a cortina
-     abre ao meio. Roda uma vez por sessão, pula em qualquer clique ou scroll.
+     O painel do carro acendendo na partida: o velocímetro desenha, o ponteiro
+     acelera de 0 a 240 e fica lá, tremendo de leve enquanto o vídeo carrega,
+     e a cortina abre com um facho de farol saindo do meio. Roda uma vez por sessão, pula em qualquer
+     clique ou scroll.
      ====================================================================== -->
 <div class="abertura" id="abertura" aria-hidden="true">
   <div class="abertura__metade abertura__metade--cima"></div>
   <div class="abertura__metade abertura__metade--baixo"></div>
+  <span class="abertura__facho"></span>
   <div class="abertura__centro">
-    <span class="abertura__facho abertura__facho--esq"></span>
-    <span class="abertura__facho abertura__facho--dir"></span>
-    <p class="abertura__marca">
-      <span class="fino">ponto</span>
-      <span>AUTO</span>
-      <i class="abertura__ponto"></i>
-    </p>
-    <div class="abertura__barra"><i></i></div>
+    <div class="abertura__painel">
+      <svg class="abertura__mostrador" viewBox="-120 -120 240 240">
+        <path class="abertura__trilho" d="M -76.37 76.37 A 108 108 0 1 1 76.37 76.37" pathLength="100"/>
+        <path class="abertura__arco" d="M -76.37 76.37 A 108 108 0 1 1 76.37 76.37" pathLength="100"/>
+        <path class="abertura__faixa" d="M 108 0 A 108 108 0 0 1 76.37 76.37"/>
+        <g class="abertura__marcas">
+          <line x1="-70.71" y1="70.71" x2="-60.81" y2="60.81" class="m"/><line x1="-83.15" y1="55.56" x2="-78.99" y2="52.78"/><line x1="-92.39" y1="38.27" x2="-84.07" y2="34.82"/><line x1="-98.08" y1="19.51" x2="-93.17" y2="18.53"/><line x1="-100" y1="0" x2="-86" y2="0" class="m"/><line x1="-98.08" y1="-19.51" x2="-93.17" y2="-18.53"/><line x1="-92.39" y1="-38.27" x2="-84.07" y2="-34.82"/><line x1="-83.15" y1="-55.56" x2="-78.99" y2="-52.78"/><line x1="-70.71" y1="-70.71" x2="-60.81" y2="-60.81" class="m"/><line x1="-55.56" y1="-83.15" x2="-52.78" y2="-78.99"/><line x1="-38.27" y1="-92.39" x2="-34.82" y2="-84.07"/><line x1="-19.51" y1="-98.08" x2="-18.53" y2="-93.17"/><line x1="0" y1="-100" x2="0" y2="-86" class="m"/><line x1="19.51" y1="-98.08" x2="18.53" y2="-93.17"/><line x1="38.27" y1="-92.39" x2="34.82" y2="-84.07"/><line x1="55.56" y1="-83.15" x2="52.78" y2="-78.99"/><line x1="70.71" y1="-70.71" x2="60.81" y2="-60.81" class="m"/><line x1="83.15" y1="-55.56" x2="78.99" y2="-52.78"/><line x1="92.39" y1="-38.27" x2="84.07" y2="-34.82"/><line x1="98.08" y1="-19.51" x2="93.17" y2="-18.53"/><line x1="100" y1="0" x2="86" y2="0" class="m"/><line x1="98.08" y1="19.51" x2="93.17" y2="18.53"/><line x1="92.39" y1="38.27" x2="84.07" y2="34.82"/><line x1="83.15" y1="55.56" x2="78.99" y2="52.78"/><line x1="70.71" y1="70.71" x2="60.81" y2="60.81" class="m"/>
+        </g>
+        <g class="abertura__numeros">
+          <text x="-50.91" y="50.91">0</text><text x="-72" y="0">40</text><text x="-50.91" y="-50.91">80</text><text x="0" y="-72">120</text><text x="50.91" y="-50.91">160</text><text x="72" y="0">200</text><text x="50.91" y="50.91">240</text>
+        </g>
+        <g class="abertura__ponteiro">
+          <g class="abertura__tremor">
+            <path d="M -2.6 14 L -1 -84 L 1 -84 L 2.6 14 Z"/>
+            <circle r="7.5"/>
+          </g>
+        </g>
+      </svg>
+      <p class="abertura__velocidade"><b></b><small>km/h</small></p>
+      <p class="abertura__marca"><span class="fino">ponto</span>AUTO<i class="abertura__ponto"></i></p>
+    </div>
   </div>
 </div>
 
