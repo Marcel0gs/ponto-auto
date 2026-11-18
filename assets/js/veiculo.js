@@ -101,28 +101,50 @@ function montarVeiculo() {
   const financiado = c.preco * 0.7;
   const parcela = financiado * TAXA / (1 - Math.pow(1 + TAXA, -PRAZO));
 
+  /* Modelo do print que ele mandou em 18/11/2026: marca e ano, nome, valor,
+     seis cartões de ficha com ícone, botão verde e os selos de confiança.
+     Portas nulas (moto) escondem o cartão em vez de escrever "null portas". */
+  const fichaPainel = [
+    ['calendar', 'Ano', `${c.ano}/${c.anoModelo}`],
+    ['gauge', 'Quilometragem', fmtKm(c.km)],
+    ['cog', 'Câmbio', c.cambio],
+    ['fuel', 'Combustível', c.combustivel],
+    ['palette', 'Cor', c.cor],
+    ['door-open', 'Portas', c.portas ? `${c.portas} portas` : null]
+  ].filter((f) => f[2]);
+
   $('#painel').innerHTML = `
+    <p class="painel__etiqueta">${c.marca}<i></i>${c.anoModelo}</p>
+    <p class="painel__nome">${c.marca} ${c.modelo} ${c.versao}</p>
     ${c.selo ? `<span class="selo selo--acento">${c.selo}</span>` : ''}
-    ${c.precoDe ? `<p class="de"><s>${fmtPreco(c.precoDe)}</s> agora por</p>` : '<p class="de">Preço à vista</p>'}
-    <p class="valor">${fmtPreco(c.preco)}</p>
-    <p class="parcela-linha">
+    <p class="painel__rotulo">Valor${c.precoDe ? ` <s>${fmtPreco(c.precoDe)}</s>` : ''}</p>
+    <p class="valor">${c.preco ? fmtPreco(c.preco) : 'Sob consulta'}</p>
+    <a class="parcela-linha" href="#simular">
       ${ico('hand-coins')}
-      ou entrada de 30% e <b>${PRAZO}x de ${fmtPreco(Math.round(parcela))}</b>
-    </p>
+      <span>ou entrada de 30% e <b>${PRAZO}x de ${fmtPreco(Math.round(parcela))}</b></span>
+    </a>
+    <dl class="painel__ficha">
+      ${fichaPainel.map(([i, rotulo, valor]) => `
+        <div>
+          <span class="painel__icone">${ico(i)}</span>
+          <dt>${rotulo}</dt>
+          <dd>${valor}</dd>
+        </div>`).join('')}
+    </dl>
     <div class="acoes">
-      <a class="btn btn--zap btn--bloco" href="${zapCarro(c)}">
+      <a class="btn btn--zap btn--bloco btn--g" href="${zapCarro(c)}">
         ${ico('whatsapp').replace('class="icone"', 'class="icone icone--cheio"')}
-        Falar sobre esse carro
+        Falar com um vendedor
       </a>
-      <a class="btn btn--vazado-escuro btn--bloco" href="index.html#simular">
+      <a class="btn btn--vazado-escuro btn--bloco" href="#simular">
         ${ico('banknote')} Simular financiamento
       </a>
     </div>
     <ul class="garantias">
-      <li>${ico('circle-check')} Laudo cautelar aprovado</li>
-      <li>${ico('circle-check')} Garantia de ${c.garantia || '6 meses'} de motor e câmbio</li>
-      <li>${ico('circle-check')} Aceitamos seu usado na troca</li>
-      <li>${ico('circle-check')} Transferência e emplacamento inclusos</li>
+      <li>${ico('check')} Procedência verificada</li>
+      <li>${ico('check')} Documentação completa</li>
+      <li>${ico('check')} Laudo cautelar aprovado</li>
+      <li>${ico('check')} Garantia de ${c.garantia || '6 meses'}</li>
     </ul>`;
 
   /* ---------- resumo, ficha e opcionais --------------------------------- */

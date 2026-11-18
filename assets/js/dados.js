@@ -71,7 +71,7 @@ const ESTOQUE = [
     preco: 689900, precoDe: null,
     cambio: 'Automático', combustivel: 'Gasolina', carroceria: 'Picape',
     cor: 'Cinza', portas: 4, finais: 7,
-    destaque: true, selo: '702 cv',
+    destaque: true, home: false /* 18/11: fora da grade da home, ele achou que não parece carro do Brasil */, selo: '702 cv',
     ...fotosDe('ram'),
     galeria: ['assets/img/hero/ram-noite-1920.webp'],
     resumo: 'São 702 cavalos, suspensão Bilstein de competição e pneus de 35 polegadas. Uma das poucas rodando no Brasil, com toda a documentação de importação.',
@@ -240,11 +240,11 @@ const GALERIA_EXTRA = [
 ];
 
 const ENTREGAS = [
-  { foto: 'assets/img/entregas/01.webp', nome: 'Rafael e Camila', carro: 'Compass Longitude', texto: 'Procuramos em seis lojas antes. A diferença aqui foi o laudo na mesa antes da gente pedir.' },
-  { foto: 'assets/img/entregas/02.webp', nome: 'Juliana Prado', carro: 'Golf GTI', texto: 'Comprei sem ir na loja, só por vídeo e WhatsApp. Chegou exatamente como mostraram.' },
-  { foto: 'assets/img/entregas/03.webp', nome: 'Bruno Azevedo', carro: 'Hilux SRV 4x4', texto: 'Dei meu carro na troca e a avaliação veio acima do que eu esperava. Fechei no mesmo dia.' },
-  { foto: 'assets/img/entregas/04.webp', nome: 'Larissa e Diego', carro: 'Creta Prestige', texto: 'Primeiro carro financiado da gente. Explicaram parcela por parcela, sem enrolar.' },
-  { foto: 'assets/img/entregas/05.webp', nome: 'Marcos Teixeira', carro: 'Fusion SEL', texto: 'Levei meu mecânico junto na vistoria. Ele não achou nada para reclamar.' }
+  { foto: 'assets/img/entregas/01.webp', nome: 'Rafael e Camila', carro: 'Fusion SEL', quando: 'há 2 semanas', texto: 'Primeiro carro financiado da gente. Explicaram parcela por parcela, sem pressa e sem letra miúda.' },
+  { foto: 'assets/img/entregas/02.webp', nome: 'Bruno Azevedo', carro: 'Golf GTI', quando: 'há 3 semanas', texto: 'Dei meu carro na troca e a avaliação veio acima do que eu esperava. Fechei no mesmo dia.' },
+  { foto: 'assets/img/entregas/03.webp', nome: 'Juliana Prado', carro: 'RAV4 Hybrid', quando: 'há 1 mês', texto: 'Vi o laudo pelo WhatsApp antes de sair de casa. Na loja o carro estava igualzinho às fotos.' },
+  { foto: 'assets/img/entregas/04.webp', nome: 'Marcos Teixeira', carro: 'Creta Prestige', quando: 'há 1 mês', texto: 'Levei meu mecânico junto na vistoria. Ele não achou nada para reclamar.' },
+  { foto: 'assets/img/entregas/05.webp', nome: 'Diego, Ana e Bia', carro: 'Compass Longitude', quando: 'há 2 meses', texto: 'Procurei em seis lojas antes. Aqui o laudo veio pra mesa antes de eu pedir, e as meninas escolheram a cor.' }
 ];
 
 /* ---------- utilidades usadas em todas as páginas ---------- */

@@ -18,6 +18,12 @@
 
 <a class="pular-para" href="#conteudo">Pular para o conteúdo</a>
 
+<!-- faixa fina e fixa: a loja é fictícia (18/11/2026, no lugar do aviso que abria na tela) -->
+<div class="faixa-demo" role="note">
+  <span>Site de demonstração<span class="faixa-demo__longo">: a ponto AUTO é uma loja fictícia, criada para mostrar o modelo</span></span>
+  <a href="para-lojas.html">Quero um site assim</a>
+</div>
+
 <header class="topo" id="topo">
   <button class="btn-menu" id="abre-menu" type="button" aria-expanded="false" aria-controls="menu">
     <svg class="icone" aria-hidden="true"><use href="#i-menu"></use></svg>
@@ -47,8 +53,8 @@
   </div>
   <div class="menu__lista">
     <a href="estoque.html">Estoque <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-    <a href="index.html#destaques-secao">Destaques <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-    <a href="index.html#simular">Financiamento <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#estoque-secao">Estoque em destaque <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    <a href="index.html#como-comprar">Como comprar <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
     <a href="index.html#entregas-secao">Clientes <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
     <a href="index.html#visite">Onde estamos <svg class="icone" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
   </div>
@@ -133,8 +139,71 @@
     </div>
   </section>
 
+  <!-- ============ SIMULADOR (veio da home em 18/11/2026, preso ao carro da página) ============ -->
+  <section class="secao cinza" id="simular">
+    <div class="container">
+      <div class="cabeca-secao rev">
+        <p class="t-etiqueta">Sem conversa de vendedor</p>
+        <h2>Faça as contas<br><span class="t-fino">antes de decidir</span></h2>
+        <p class="lead">
+          Mexe na entrada, escolhe o prazo e vê a parcela deste carro na hora. O
+          valor que aparecer aqui é o valor que o consultor vai confirmar no WhatsApp.
+        </p>
+      </div>
+
+      <div class="simulador rev rev--d1" id="simulador" data-carro="url">
+        <div>
+          <div class="campo">
+            <label for="sim-carro">Carro</label>
+            <select id="sim-carro"></select>
+          </div>
+
+          <div class="campo">
+            <span class="rotulo">
+              Entrada
+              <b><span id="sim-valor-entrada">R$ 0</span> · <span id="sim-pct-entrada">0%</span></b>
+            </span>
+            <input type="range" id="sim-entrada" min="0" max="100" step="500" aria-label="Valor da entrada">
+            <div class="faixa-limites">
+              <span id="sim-min">R$ 0</span>
+              <span id="sim-max">R$ 0</span>
+            </div>
+          </div>
+
+          <div class="campo">
+            <span class="rotulo">Prazo</span>
+            <div class="chips" role="group" aria-label="Prazo em meses">
+              <button class="chip" type="button" data-prazo="24" aria-pressed="false">24x</button>
+              <button class="chip" type="button" data-prazo="36" aria-pressed="false">36x</button>
+              <button class="chip" type="button" data-prazo="48" aria-pressed="true">48x</button>
+              <button class="chip" type="button" data-prazo="60" aria-pressed="false">60x</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="resultado">
+          <small>Sua parcela fica em</small>
+          <p class="parcela" id="sim-parcela">R$ 0</p>
+          <ul>
+            <li><span>Valor financiado</span><b id="sim-financiado">R$ 0</b></li>
+            <li><span>Prazo</span><b id="sim-prazo">48x</b></li>
+            <li><span>Total pago</span><b id="sim-total">R$ 0</b></li>
+          </ul>
+          <a class="btn btn--zap btn--bloco" id="sim-zap" href="#">
+            <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            Confirmar no WhatsApp
+          </a>
+          <p class="aviso">
+            Simulação com taxa de 1,69% ao mês, a título de exemplo. A taxa final
+            depende da análise do banco, do seu perfil e do ano do veículo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ OUTRAS ESCOLHAS ============ -->
-  <section class="secao cinza">
+  <section class="secao">
     <div class="container">
       <div class="cabeca-secao rev">
         <p class="t-etiqueta">No mesmo perfil</p>
@@ -166,7 +235,7 @@
         <h4>Navegar</h4>
         <ul>
           <li><a href="estoque.html">Estoque</a></li>
-          <li><a href="index.html#simular">Financiamento</a></li>
+          <li><a href="index.html#como-comprar">Como comprar</a></li>
           <li><a href="index.html#checagem">Como checamos</a></li>
           <li><a href="index.html#entregas-secao">Clientes</a></li>
         </ul>
@@ -175,7 +244,7 @@
         <h4>Serviços</h4>
         <ul>
           <li><a href="#" data-zap="Olá! Quero avaliar meu carro na troca.">Avaliação na troca</a></li>
-          <li><a href="index.html#simular">Financiamento</a></li>
+          <li><a href="index.html#como-comprar">Como comprar</a></li>
           <li><a href="#" data-zap="Olá! Queria saber sobre a consignação.">Consignação</a></li>
           <li><a href="#" data-zap="Olá! Queria saber sobre transferência e emplacamento.">Documentação</a></li>
         </ul>
@@ -199,15 +268,15 @@
       </div>
     </div>
     <div class="rodape__fim">
-      <p style="margin:0">
-        Site de demonstração. ponto AUTO é uma marca fictícia, criada para mostrar
-        o padrão de site que entregamos para lojas de veículos.
-        <a href="para-lojas.html" style="color:rgba(255,255,255,.7);text-decoration:underline">Saiba mais</a>
-      </p>
       <p style="margin:0"><a href="entrar.html" style="text-decoration:underline">Área da loja</a> · &copy; 2026 ponto AUTO</p>
     </div>
   </div>
 </footer>
+
+<div class="faixa-demo faixa-demo--pe" role="note">
+  <span>Site de demonstração. A ponto AUTO é uma loja fictícia: carros, preços, números e depoimentos são exemplos.</span>
+  <a href="para-lojas.html">Quero um site assim</a>
+</div>
 
 <a class="zap-flutua" id="zap-flutua" href="#" data-zap="Olá! Estou vendo um carro no site e queria mais informações.">
   <svg class="icone icone--cheio" aria-hidden="true"><use href="#i-whatsapp"></use></svg>

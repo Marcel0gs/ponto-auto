@@ -304,146 +304,6 @@ p:last-child { margin-bottom: 0; }
 .link-seta .icone { width: 1.1em; height: 1.1em; }
 
 /* ==========================================================================
-   4. ABERTURA (a animação de entrada)
-   O painel do carro acendendo na partida. Uma única variável animada, --v
-   (a velocidade, de 0 a 240), move o ponteiro, enche o arco e escreve o
-   número. Depois a cortina preta abre ao meio com um facho de farol.
-   Roda uma vez por sessão. Some na hora com prefers-reduced-motion.
-   Navegador sem @property: o ponteiro fica no zero e o resto acontece igual.
-   ========================================================================== */
-
-@property --v { syntax: "<integer>"; initial-value: 0; inherits: true; }
-
-.abertura {
-  position: fixed; inset: 0; z-index: 200;
-  pointer-events: none;
-}
-.abertura[hidden] { display: none; }
-
-.abertura__metade {
-  position: absolute; left: 0; width: 100%; height: 50.5%;
-  background: var(--tinta);
-  transition: transform 1.05s cubic-bezier(.76, 0, .24, 1);
-}
-.abertura__metade--cima { top: 0; }
-.abertura__metade--baixo { bottom: 0; }
-
-.abertura__centro {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  transition: opacity .35s ease, transform .6s cubic-bezier(.76, 0, .24, 1);
-}
-
-.abertura__painel {
-  --v: 0;
-  position: relative;
-  width: min(64vw, 300px);
-  display: grid; justify-items: center;
-}
-.abertura.roda .abertura__painel {
-  /* acelera até 240 e fica lá */
-  animation: partida 1.3s .5s both;
-}
-@keyframes partida {
-  0%   { --v: 0; animation-timing-function: cubic-bezier(.5, 0, .2, 1); }
-  100% { --v: 240; }
-}
-
-.abertura__mostrador {
-  width: 100%; height: auto; overflow: visible;
-  opacity: 0; transform: scale(.9);
-}
-.abertura.roda .abertura__mostrador { animation: liga-painel .7s cubic-bezier(.16, 1, .3, 1) .05s forwards; }
-@keyframes liga-painel { to { opacity: 1; transform: none; } }
-
-.abertura__trilho { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: 3; }
-.abertura__faixa { fill: none; stroke: #ff4d4d; stroke-width: 3; opacity: .75; }
-.abertura__arco {
-  fill: none; stroke: var(--acento-claro); stroke-width: 3;
-  stroke-dasharray: 100;
-  stroke-dashoffset: calc(100 - var(--v) * 100 / 240);
-  filter: drop-shadow(0 0 5px var(--acento));
-}
-
-.abertura__marcas line { stroke: rgba(255, 255, 255, .38); stroke-width: 1.4; }
-.abertura__marcas line.m { stroke: #fff; stroke-width: 2.4; }
-.abertura__numeros text {
-  fill: rgba(255, 255, 255, .55);
-  font-size: 11px; font-weight: 700; letter-spacing: .02em;
-  text-anchor: middle; dominant-baseline: central;
-}
-
-/* gira em volta do centro do mostrador (o 0,0 do viewBox) */
-.abertura__ponteiro { rotate: calc(var(--v) * 1.125deg - 135deg); }
-.abertura__ponteiro path { fill: #fff; filter: drop-shadow(0 0 4px rgba(95, 212, 255, .8)); }
-.abertura__ponteiro circle { fill: var(--tinta); stroke: #fff; stroke-width: 2; }
-/* no fim do curso o ponteiro treme de leve enquanto a cortina espera o vídeo */
-.abertura.roda .abertura__tremor { animation: marcha-lenta .09s linear 1.8s infinite alternate; }
-@keyframes marcha-lenta { from { rotate: -.8deg; } to { rotate: .8deg; } }
-
-.abertura__velocidade {
-  position: absolute; top: 56%; left: 50%; translate: -50% 0;
-  display: grid; justify-items: center; line-height: 1;
-  color: #fff;
-  opacity: 0;
-}
-.abertura.roda .abertura__velocidade { animation: liga-painel .5s ease .35s forwards; }
-.abertura__velocidade b {
-  font-size: clamp(1.9rem, 7vw, 2.9rem); font-weight: 800; font-stretch: 88%;
-  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
-}
-.abertura__velocidade b::before { counter-reset: vel var(--v); content: counter(vel); }
-.abertura__velocidade small {
-  margin-top: .3rem;
-  font-size: .62rem; font-weight: 700; letter-spacing: .24em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .5);
-}
-
-.abertura__marca {
-  display: flex; align-items: baseline; gap: .14em;
-  margin-top: -.4rem;
-  font-size: clamp(1.15rem, 4.2vw, 1.6rem);
-  font-weight: 800; font-stretch: 92%; letter-spacing: -.03em;
-  color: #fff;
-  opacity: 0;
-}
-.abertura.roda .abertura__marca { animation: liga-painel .6s ease .6s forwards; }
-.abertura__marca .fino { font-weight: 300; font-stretch: 105%; opacity: .78; }
-
-/* o ponto da marca acende como a luz de "pronto" do painel */
-.abertura__ponto {
-  width: .2em; height: .2em; border-radius: 50%;
-  background: rgba(255, 255, 255, .2);
-  align-self: flex-end; margin-bottom: .12em;
-}
-.abertura.roda .abertura__ponto { animation: pronto .6s cubic-bezier(.34, 1.56, .64, 1) 2.2s forwards; }
-@keyframes pronto {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.6); background: var(--acento-claro); box-shadow: 0 0 22px 6px var(--acento); }
-  100% { transform: scale(1); background: var(--acento-claro); box-shadow: 0 0 12px 2px rgba(75, 123, 255, .55); }
-}
-
-/* facho de farol: nasce no meio quando a cortina abre e varre para os lados */
-.abertura__facho {
-  position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
-  translate: 0 -50%;
-  background: linear-gradient(90deg, transparent, var(--brilho) 30%, #fff 50%, var(--brilho) 70%, transparent);
-  box-shadow: 0 0 18px 4px rgba(95, 212, 255, .55), 0 0 60px 12px rgba(26, 86, 240, .35);
-  transform: scaleX(0); opacity: 0;
-}
-.abertura.abriu .abertura__facho { animation: facho .95s cubic-bezier(.16, 1, .3, 1) forwards; }
-@keyframes facho {
-  0% { transform: scaleX(0); opacity: 1; }
-  40% { opacity: 1; }
-  100% { transform: scaleX(1); opacity: 0; }
-}
-
-/* estado final: cortina aberta */
-.abertura.abriu .abertura__centro { opacity: 0; transform: scale(1.06); }
-.abertura.abriu .abertura__metade--cima { transform: translateY(-100%); }
-.abertura.abriu .abertura__metade--baixo { transform: translateY(100%); }
-
-/* ==========================================================================
    5. CABEÇALHO
    ========================================================================== */
 
@@ -597,9 +457,10 @@ p:last-child { margin-bottom: 0; }
 
 /* ==========================================================================
    6. HERO
-   Vídeo do carro no escuro (névoa andando, farol pulsando) com a foto em alta
-   por baixo, de reserva. O carro cresce e sobe com o scroll: uma variável só,
-   --p, de 0 a 1, que o JS escreve e o CSS interpola.
+   Vídeo real de um close no farol que toca uma vez e para no último quadro
+   (a foto de reserva é esse mesmo quadro). Título embaixo à esquerda com dois
+   botões, como nos sites de montadora. No desktop a mídia cresce e sobe com o
+   scroll: uma variável só, --p, de 0 a 1, que o JS escreve e o CSS interpola.
    ========================================================================== */
 
 .hero {
@@ -610,11 +471,9 @@ p:last-child { margin-bottom: 0; }
   background: var(--tinta); color: #fff;
   overflow: hidden;
   isolation: isolate;
-  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+  padding-bottom: clamp(2.5rem, 8vh, 5.5rem);
 }
 
-/* Palco = foto + vídeo empilhados. O "acender" (filtro) mora no palco, para
-   valer igual para os dois; o parallax (transform) mora em cada mídia. */
 .hero__palco {
   position: absolute; inset: 0; z-index: -3;
   overflow: hidden;
@@ -623,97 +482,29 @@ p:last-child { margin-bottom: 0; }
 .hero__midia {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 55%;
-  transform: scale(calc(1.04 + var(--p) * .2)) translateY(calc(var(--p) * -4vh));
+  object-fit: cover; object-position: 50% 50%;
+  transform: scale(calc(1 + var(--p) * .16)) translateY(calc(var(--p) * -4vh));
   will-change: transform;
 }
-/* O vídeo só aparece por cima da foto quando já está tocando. Ele não é um
-   recorte exato da foto (o Gemini reenquadrou), então a troca acontece com o
-   carro ainda escuro, no começo do acender, onde ninguém percebe. */
-.hero__video { opacity: 0; transition: opacity 1.2s ease; }
+/* Com JS a foto espera: o vídeo nasce do preto e vira a própria foto no fim.
+   Ela só aparece se o vídeo não vier (hero--foto) ou quando ele termina
+   (hero--fim, por baixo, com o mesmo quadro). Sem JS ela está lá desde o início. */
+.js .hero__foto { opacity: 0; transition: opacity .8s ease; }
+.js .hero--foto .hero__foto, .js .hero--fim .hero__foto { opacity: 1; }
+.hero__video { opacity: 0; transition: opacity .5s ease; }
 .hero__video.tocando { opacity: 1; }
 
-/* ---------- O CARRO SAINDO DO ESCURO ------------------------------------
-   O palco nasce preto e a mídia um pouco mais perto; acendem juntos enquanto
-   recuam, logo depois que a cortina da abertura abre. Usa `scale` e `filter`,
-   e não `transform`, porque o transform é do parallax e os dois precisam somar.
-   O farol do vídeo pulsa em 1,2s: cai quando o carro está com ~85% da luz.
-
-   Tudo fica atrás de html.js (sem JavaScript a página aparece pronta) e o
-   gatilho é html.acendeu, que o JS liga no meio da abertura da cortina. */
-
-.js .hero__palco { filter: brightness(0); }
-.acendeu .hero__palco { animation: acende-luz 2.4s cubic-bezier(.22, 1, .36, 1) forwards; }
-@keyframes acende-luz {
-  0% { filter: brightness(0) saturate(.5); }
-  30% { filter: brightness(.45) saturate(.7); }
-  100% { filter: none; }
-}
-.js .hero__midia { scale: 1.14; }
-.acendeu .hero__midia { animation: acende-zoom 2.4s cubic-bezier(.22, 1, .36, 1) forwards; }
-@keyframes acende-zoom { from { scale: 1.14; } to { scale: 1; } }
-/* uma faixa de luz de estúdio que passa uma vez por cima do carro */
-.hero__varredura {
-  position: absolute; inset: 0; z-index: -2; pointer-events: none;
-  background: linear-gradient(104deg,
-    transparent 36%, rgba(150, 185, 255, .16) 45%,
-    rgba(255, 255, 255, .42) 50%, rgba(150, 185, 255, .16) 55%, transparent 64%);
-  mix-blend-mode: screen;
-  transform: translateX(-110%);
-  opacity: 0;
-}
-.acendeu .hero__varredura { animation: varre 1.7s cubic-bezier(.5, 0, .2, 1) .55s forwards; }
-@keyframes varre {
-  0% { transform: translateX(-110%); opacity: 0; }
-  18% { opacity: 1; }
-  82% { opacity: 1; }
-  100% { transform: translateX(110%); opacity: 0; }
-}
-
-/* cabeçalho entra junto com o carro, não antes */
-.js body.home .topo { opacity: 0; translate: 0 -12px; transition: opacity .8s ease .9s, translate .8s cubic-bezier(.22, 1, .36, 1) .9s, background .4s ease, padding .4s ease, color .4s ease, box-shadow .4s ease; }
+/* cabeçalho entra junto com o título, não antes */
+.js body.home .topo { opacity: 0; translate: 0 -12px; transition: opacity .8s ease .35s, translate .8s cubic-bezier(.22, 1, .36, 1) .35s, background .4s ease, padding .4s ease, color .4s ease, box-shadow .4s ease; }
 .acendeu body.home .topo { opacity: 1; translate: 0 0; }
 
-/* névoa: duas camadas que andam em velocidades diferentes */
-.hero__nevoa {
-  position: absolute; inset: -12% -20%; z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 40% at 22% 78%, rgba(150, 175, 210, .2), transparent 70%),
-    radial-gradient(52% 34% at 78% 84%, rgba(120, 150, 195, .16), transparent 72%);
-  animation: nevoa 26s ease-in-out infinite alternate;
-  transform: translateX(calc(var(--p) * 5%));
-}
-.hero__nevoa--2 {
-  inset: -8% -26%;
-  background: radial-gradient(48% 30% at 50% 88%, rgba(180, 200, 230, .16), transparent 70%);
-  animation-duration: 19s; animation-direction: alternate-reverse;
-  transform: translateX(calc(var(--p) * -7%));
-}
-@keyframes nevoa {
-  0% { transform: translate3d(-3%, 0, 0) scale(1); opacity: .85; }
-  100% { transform: translate3d(4%, -2%, 0) scale(1.1); opacity: 1; }
-}
-
-/* brilho azul de trás do carro, respirando devagar */
-.hero__brilho {
-  position: absolute; z-index: -2; pointer-events: none;
-  left: 50%; top: 46%; translate: -50% -50%;
-  width: min(760px, 88vw); aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(26, 86, 240, .3), transparent 62%);
-  filter: blur(30px);
-  animation: respira 7s ease-in-out infinite;
-}
-@keyframes respira {
-  0%, 100% { opacity: .55; transform: scale(1); }
-  50% { opacity: .95; transform: scale(1.08); }
-}
-
+/* escurece a esquerda e o pé, onde mora o texto; o farol fica limpo */
 .hero__vinheta {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(8, 9, 12, .82) 0%, transparent 34%, transparent 46%, rgba(8, 9, 12, .9) 92%),
-    radial-gradient(120% 78% at 50% 44%, transparent 42%, rgba(8, 9, 12, .82) 100%);
+    linear-gradient(to bottom, rgba(8, 9, 12, .7) 0%, transparent 24%),
+    linear-gradient(to top, rgba(8, 9, 12, .92) 0%, rgba(8, 9, 12, .45) 34%, transparent 58%),
+    linear-gradient(to right, rgba(8, 9, 12, .9) 0%, rgba(8, 9, 12, .62) 34%, rgba(8, 9, 12, .2) 56%, transparent 70%);
 }
 
 .hero__conteudo {
@@ -722,99 +513,45 @@ p:last-child { margin-bottom: 0; }
   margin-inline: auto; padding-inline: var(--gutter);
 }
 
+.hero__etiqueta {
+  display: inline-flex; align-items: center; gap: .65rem;
+  margin-bottom: 1.3rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .74);
+}
+.js .hero__etiqueta { opacity: 0; }
+.acendeu .hero__etiqueta { animation: aparece .8s ease .2s forwards; }
+
 .hero__titulo {
   display: grid; gap: .02em;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.3rem;
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height: .98;
 }
 .hero__titulo span { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; } /* folga para a cedilha do Ç */
-.hero__titulo { font-size: clamp(2.9rem, 11vw, 7rem); }
 .hero__titulo b { display: block; font-weight: 800; }
-
-/* título, texto e busca entram DEPOIS que o carro acendeu. Antes eles
-   animavam atrás da cortina e já estavam prontos quando ela abria. */
 .js .hero__titulo b { transform: translateY(105%); }
 .acendeu .hero__titulo b { animation: sobe-linha 1.05s cubic-bezier(.16, 1, .3, 1) forwards; }
-.acendeu .hero__titulo span:nth-child(1) b { animation-delay: .75s; }
-.acendeu .hero__titulo span:nth-child(2) b { animation-delay: .88s; }
+.acendeu .hero__titulo span:nth-child(1) b { animation-delay: .35s; }
+.acendeu .hero__titulo span:nth-child(2) b { animation-delay: .48s; }
 @keyframes sobe-linha { from { transform: translateY(105%); } to { transform: translateY(0); } }
 .hero__titulo .fraco {
   font-weight: 200; font-stretch: 105%;
-  color: rgba(255, 255, 255, .58);
+  color: rgba(255, 255, 255, .74);
 }
-/* as duas linhas se afastam levemente conforme desce */
-.hero__titulo span:nth-child(1) b { translate: calc(var(--p) * -3vw) 0; }
-.hero__titulo span:nth-child(2) b { translate: calc(var(--p) * 3vw) 0; }
 
 .hero__sub {
-  max-width: 44ch; font-size: clamp(.95rem, 1.7vw, 1.12rem);
-  color: rgba(255, 255, 255, .72); margin-bottom: 1.8rem;
+  max-width: 46ch; font-size: clamp(.98rem, 1.6vw, 1.12rem);
+  color: rgba(255, 255, 255, .76); margin-bottom: 2rem;
 }
 .js .hero__sub { opacity: 0; }
-.acendeu .hero__sub { animation: aparece .9s ease 1.2s forwards; }
+.acendeu .hero__sub { animation: aparece .9s ease .75s forwards; }
 @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
 
-/* busca rápida no rodapé do hero */
-.busca {
-  display: grid; gap: .55rem;
-  padding: .55rem;
-  background: rgba(255, 255, 255, .07);
-  border: 1px solid rgba(255, 255, 255, .15);
-  border-radius: var(--raio-g);
-  backdrop-filter: blur(16px);
-}
-.js .busca { opacity: 0; }
-.acendeu .busca { animation: sobe-busca .9s cubic-bezier(.16, 1, .3, 1) 1.35s forwards; }
+.hero__acoes { display: flex; flex-wrap: wrap; gap: .75rem; }
+.js .hero__acoes { opacity: 0; }
+.acendeu .hero__acoes { animation: sobe-busca .9s cubic-bezier(.16, 1, .3, 1) .9s forwards; }
 @keyframes sobe-busca { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-
-@media (min-width: 760px) {
-  .busca { grid-template-columns: repeat(3, 1fr) auto; align-items: center; }
-}
-.busca__campo { position: relative; display: flex; align-items: center; }
-.busca__campo > .icone {
-  position: absolute; left: .95rem; width: 1.05rem; height: 1.05rem;
-  color: rgba(255, 255, 255, .45); pointer-events: none;
-}
-.busca select {
-  appearance: none; width: 100%;
-  padding: .95rem 2.4rem .95rem 2.7rem;
-  background: transparent; color: #fff;
-  border: 1px solid rgba(255, 255, 255, .13); border-radius: 12px;
-  font-size: .92rem; font-weight: 500;
-  cursor: pointer;
-}
-.busca select:hover { border-color: rgba(255, 255, 255, .3); }
-.busca select option { background: var(--tinta-2); color: #fff; }
-.busca__campo::after {
-  content: ''; position: absolute; right: 1rem; pointer-events: none;
-  width: 7px; height: 7px; border-right: 2px solid rgba(255, 255, 255, .5);
-  border-bottom: 2px solid rgba(255, 255, 255, .5);
-  transform: translateY(-2px) rotate(45deg);
-}
-.busca .btn { height: 100%; }
-
-/* título e texto de um lado, etiqueta do carro do hero do outro */
-.hero__linha {
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem;
-}
-
-/* "Em estoque": o carro da abertura é um carro do estoque, com link */
-.hero__legenda {
-  display: none; align-items: center; gap: .9rem; flex: none;
-  margin-bottom: 1.8rem;
-  padding: .75rem .95rem .75rem 1.05rem;
-  background: rgba(8, 9, 12, .42);
-  border: 1px solid rgba(255, 255, 255, .14);
-  border-radius: 16px; backdrop-filter: blur(12px);
-  color: rgba(255, 255, 255, .7); font-size: .76rem; line-height: 1.35;
-  transition: border-color .3s ease, background .3s ease, transform .3s var(--suave);
-}
-.hero__legenda:hover { border-color: rgba(95, 212, 255, .55); background: rgba(8, 9, 12, .6); transform: translateY(-2px); }
-.hero__legenda b { display: block; color: #fff; font-size: .9rem; letter-spacing: -.01em; }
-.hero__legenda small { display: block; font-size: .7rem; letter-spacing: .06em; }
-.hero__legenda .icone { width: 1.1rem; height: 1.1rem; color: var(--brilho); }
-@media (min-width: 1000px) { .hero__legenda { display: flex; } }
-.js .hero__legenda { opacity: 0; }
-.acendeu .hero__legenda { animation: sobe-busca .9s cubic-bezier(.16, 1, .3, 1) 1.6s forwards; }
 
 /* ponto verde "ao vivo": pulso discreto, é aviso de disponibilidade */
 .ponto-vivo {
@@ -827,30 +564,28 @@ p:last-child { margin-bottom: 0; }
 }
 @keyframes pulso-vivo { from { transform: scale(1); opacity: .7; } to { transform: scale(3.2); opacity: 0; } }
 
-/* No celular os três seletores cobririam o carro inteiro logo na primeira
-   tela, que é justamente a que precisa impressionar. Ali a busca vira um
-   botão só, e o filtro completo fica na página de estoque. */
-@media (max-width: 759px) {
-  .busca { background: none; border: 0; padding: 0; backdrop-filter: none; }
-  .busca__campo { display: none; }
-  .busca .btn { width: 100%; padding: 1.1rem; font-size: .95rem; }
-}
-
-/* No celular a mídia (paisagem) vira uma faixa logo abaixo do cabeçalho,
-   com o carro inteiro, e o texto fica embaixo dela. A faixa some nas bordas
-   de cima e de baixo, sem linha de corte. A altura segue a largura (1,05x)
-   para caber o carro inteiro em qualquer celular. */
+/* No celular a mídia (paisagem) vira uma faixa logo abaixo do cabeçalho e o
+   texto fica embaixo dela. A faixa some nas bordas de cima e de baixo, sem
+   linha de corte. O farol fica no centro do recorte. */
 @media (max-width: 759px) {
   .hero__palco {
-    top: 70px; bottom: auto; height: calc(100vw * 1.05);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 62%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 62%, transparent 100%);
+    top: calc(56px + var(--faixa-demo, 0px)); bottom: auto;
+    height: max(62vw, calc(100svh - 310px));
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 66%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 8%, #000 66%, transparent 100%);
   }
-  .hero__midia { object-position: 49% 50%; }
+  .hero__midia { object-position: 40% 50%; }
+  .hero__vinheta { background: linear-gradient(to top, rgba(8, 9, 12, 1) 0%, rgba(8, 9, 12, .6) 40%, transparent 62%); }
+  .hero { padding-bottom: 1.5rem; }
+  .hero__etiqueta { font-size: .6rem; margin-bottom: .7rem; }
+  .hero__titulo { font-size: clamp(1.8rem, 8.4vw, 2.3rem); margin-bottom: .75rem; }
+  .hero__sub { font-size: .9rem; line-height: 1.5; margin-bottom: 1.15rem; }
+  .hero__acoes { flex-wrap: nowrap; gap: .6rem; }
+  .hero__acoes .btn { flex: 1 1 0; justify-content: center; min-height: 46px; padding: .75rem .6rem; font-size: .76rem; }
+  .hero__acoes .btn .icone { width: 1.05rem; height: 1.05rem; }
 }
 
-/* Indicador de rolagem. Fica na lateral direita, na vertical, porque no
-   rodapé do hero ele cairia em cima da barra de busca. */
+/* Indicador de rolagem, na lateral direita, na vertical */
 .hero__rolagem {
   position: absolute; right: 26px; top: 50%; translate: 0 -50%;
   display: none; flex-direction: column; align-items: center; gap: .9rem;
@@ -872,6 +607,47 @@ p:last-child { margin-bottom: 0; }
 @keyframes desce {
   0% { transform: translateY(-100%); } 100% { transform: translateY(100%); }
 }
+
+/* ---------- BUSCA: faixa clara logo depois do topo ---------------------- */
+.busca-faixa {
+  background: var(--papel);
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--linha);
+}
+.busca-faixa__grade { display: grid; gap: 1.2rem; align-items: center; }
+@media (min-width: 1000px) {
+  .busca-faixa__grade { grid-template-columns: minmax(0, 15rem) 1fr; gap: 3rem; }
+}
+.busca-faixa__texto .t-etiqueta { margin-bottom: .45rem; }
+.busca-faixa h2 { font-size: clamp(1.45rem, 2.4vw, 1.9rem); line-height: 1.1; }
+
+.busca { display: grid; gap: .6rem; }
+@media (min-width: 760px) {
+  .busca { grid-template-columns: repeat(3, 1fr) auto; align-items: center; }
+}
+.busca__campo { position: relative; display: flex; align-items: center; }
+.busca__campo > .icone {
+  position: absolute; left: .95rem; width: 1.05rem; height: 1.05rem;
+  color: var(--texto-suave); pointer-events: none;
+}
+.busca select {
+  appearance: none; width: 100%;
+  padding: 1rem 2.4rem 1rem 2.75rem;
+  background: var(--papel-2); color: var(--texto);
+  border: 1px solid transparent; border-radius: 12px;
+  font-size: .94rem; font-weight: 500;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+.busca select:hover { border-color: var(--linha); background: #fff; }
+.busca select:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.busca__campo::after {
+  content: ''; position: absolute; right: 1rem; pointer-events: none;
+  width: 7px; height: 7px; border-right: 2px solid var(--texto-suave);
+  border-bottom: 2px solid var(--texto-suave);
+  transform: translateY(-2px) rotate(45deg);
+}
+.busca .btn { height: 100%; min-height: 52px; justify-content: center; }
 
 /* ==========================================================================
    7. REVELAÇÃO NO SCROLL
@@ -1193,14 +969,19 @@ input[type='range']::-moz-range-thumb {
 .quebra__fundo img {
   width: 100%; height: 100%; object-fit: cover;
   transform: translateY(calc(var(--p) * 14%)) scale(1.06);
-  opacity: .5;
   will-change: transform;
 }
 .quebra::after {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
-    linear-gradient(to right, rgba(8, 9, 12, .94) 0%, rgba(8, 9, 12, .72) 46%, rgba(8, 9, 12, .35) 100%),
-    linear-gradient(to bottom, rgba(8, 9, 12, .9), transparent 26%, transparent 74%, rgba(8, 9, 12, .9));
+    linear-gradient(to right, rgba(8, 9, 12, .94) 0%, rgba(8, 9, 12, .86) 30%, rgba(8, 9, 12, .55) 50%, rgba(8, 9, 12, .12) 76%, rgba(8, 9, 12, .08) 100%),
+    linear-gradient(to bottom, rgba(8, 9, 12, .6), transparent 22%, transparent 78%, rgba(8, 9, 12, .6));
+}
+/* texto centrado (o "Achou o seu?"): véu por igual */
+.quebra--centro p { color: rgba(255, 255, 255, .86); }
+.quebra--centro::after { background: radial-gradient(60% 75% at 50% 50%, rgba(8, 9, 12, .86), rgba(8, 9, 12, .62) 70%, rgba(8, 9, 12, .5)); }
+@media (max-width: 759px) {
+  .quebra::after { background: linear-gradient(to bottom, rgba(8, 9, 12, .6), rgba(8, 9, 12, .84)); }
 }
 
 .quebra__titulo {
@@ -1337,37 +1118,35 @@ input[type='range']::-moz-range-thumb {
      entra de lado, e quem desliza rápido veria espaço vazio. Aqui não anima. */
   .js .entrega.rev { opacity: 1; transform: none; }
 }
+/* Foto de celular em cima (4:5, como sai do Instagram do cliente) e o
+   depoimento embaixo, num card branco, como uma avaliação. A foto não leva
+   texto por cima. */
 .entrega {
-  position: relative; isolation: isolate; overflow: hidden;
-  border-radius: var(--raio-g);
-  aspect-ratio: 3 / 4;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1.15rem;
-  color: #fff;
-  transition: transform .5s var(--suave);
+  display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--linha);
+  border-radius: var(--raio-g); overflow: hidden;
+  transition: transform .5s var(--suave), box-shadow .5s var(--suave);
 }
-.entrega:hover { transform: translateY(-6px); }
-.entrega img {
-  position: absolute; inset: 0; z-index: -2;
+.entrega:hover { transform: translateY(-6px); box-shadow: 0 24px 40px -28px rgba(8, 9, 12, .35); }
+.entrega__foto { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--papel-2); }
+.entrega__foto img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform .9s var(--suave);
 }
-.entrega:hover img { transform: scale(1.07); }
-.entrega::after {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to top, rgba(8, 9, 12, .96) 0%, rgba(8, 9, 12, .86) 30%, rgba(8, 9, 12, .3) 62%, transparent 84%);
-}
+.entrega:hover .entrega__foto img { transform: scale(1.05); }
+.entrega__texto { display: flex; flex-direction: column; flex: 1; padding: 1rem 1.05rem 1.1rem; }
+.entrega__topo { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .6rem; }
+.entrega__topo small { font-size: .72rem; color: var(--texto-suave); }
 .entrega p {
-  font-size: .86rem; line-height: 1.45;
-  color: rgba(255, 255, 255, .88); margin-bottom: .8rem;
-  /* trava em 5 linhas: depoimento comprido não pode empurrar o nome para fora */
-  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: .88rem; line-height: 1.5;
+  color: var(--texto); margin-bottom: .9rem;
 }
-.entrega strong { display: block; font-size: .95rem; font-weight: 700; }
-.entrega small { font-size: .74rem; color: var(--acento-claro); font-weight: 600; }
-.entrega .estrelas { display: flex; gap: .12rem; margin-bottom: .7rem; color: #FFC531; }
+.entrega figcaption { margin-top: auto; }
+.entrega strong { display: block; font-size: .92rem; font-weight: 700; }
+.entrega figcaption small { font-size: .76rem; color: var(--texto-suave); }
+.entrega .estrelas { display: flex; gap: .12rem; color: #F5A623; }
 .entrega .estrelas .icone { width: .85rem; height: .85rem; }
+
 
 /* ==========================================================================
    15. RODAPÉ
@@ -1449,7 +1228,7 @@ input[type='range']::-moz-range-thumb {
   border-radius: var(--raio-g); padding: 1.3rem;
 }
 @media (min-width: 1000px) {
-  .filtros { position: sticky; top: 92px; max-height: calc(100svh - 112px); overflow-y: auto; }
+  .filtros { position: sticky; top: calc(92px + var(--faixa-demo, 0px)); max-height: calc(100svh - 112px); overflow-y: auto; }
 }
 .filtros__bloco { padding-bottom: 1.2rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--linha); }
 .filtros__bloco:last-child { border: 0; margin-bottom: 0; padding-bottom: 0; }
@@ -1591,7 +1370,7 @@ input[type='range']::-moz-range-thumb {
   background: var(--papel); border: 1px solid var(--linha);
   border-radius: var(--raio-g); padding: 1.4rem;
 }
-@media (min-width: 1000px) { .painel-preco { position: sticky; top: 92px; } }
+@media (min-width: 1000px) { .painel-preco { position: sticky; top: calc(92px + var(--faixa-demo, 0px)); } }
 .painel-preco .valor {
   font-size: clamp(2rem, 5vw, 2.7rem); font-weight: 800; font-stretch: 90%;
   letter-spacing: -.03em; line-height: 1; margin: .3rem 0 .2rem;
@@ -1611,6 +1390,57 @@ input[type='range']::-moz-range-thumb {
 }
 .painel-preco .garantias li { display: flex; align-items: center; gap: .55rem; }
 .painel-preco .garantias .icone { width: 1.05rem; height: 1.05rem; color: var(--ok); flex: none; }
+
+/* Painel no modelo do print de 18/11/2026: marca e ano, nome, valor, seis
+   cartões de ficha com ícone num quadradinho, botão verde e os selos. */
+.painel__etiqueta {
+  display: flex; align-items: center; gap: .55rem;
+  font-size: .7rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--texto-suave);
+}
+.painel__etiqueta::before { content: ''; width: 22px; height: 2px; background: var(--acento); }
+.painel__etiqueta i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+.painel__nome {
+  font-size: clamp(1.35rem, 2.4vw, 1.62rem); font-weight: 800; line-height: 1.14;
+  letter-spacing: -.02em; margin: .55rem 0 .8rem;
+}
+.painel__rotulo {
+  font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--texto-suave); margin-top: .8rem;
+}
+.painel__rotulo s { letter-spacing: 0; text-transform: none; margin-left: .35rem; }
+a.parcela-linha { color: var(--texto-suave); text-decoration: none; }
+a.parcela-linha:hover b { text-decoration: underline; }
+.painel__ficha { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin: .2rem 0 1.1rem; }
+.painel__ficha > div { border: 1px solid var(--linha); border-radius: 14px; padding: .85rem .9rem .8rem; }
+.painel__icone {
+  display: grid; place-items: center; width: 34px; height: 34px;
+  border-radius: 9px; background: rgba(26, 86, 240, .09); color: var(--acento);
+  margin-bottom: .75rem;
+}
+.painel__icone .icone { width: 1.05rem; height: 1.05rem; }
+.painel__ficha dt { font-size: .64rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
+.painel__ficha dd { margin: .2rem 0 0; font-size: .98rem; font-weight: 600; color: var(--texto); }
+.painel-preco .garantias { grid-template-columns: 1fr 1fr; gap: .5rem .8rem; font-size: .8rem; }
+.painel-preco .garantias .icone { width: .95rem; height: .95rem; }
+
+/* simulador na página do carro: o carro simulado no lugar do seletor */
+.sim-fixo { display: flex; align-items: center; gap: 1rem; padding: .8rem; margin-bottom: 1.6rem; border: 1px solid var(--linha); border-radius: 16px; background: var(--papel-2); }
+.sim-fixo img { width: 132px; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; flex: none; }
+.sim-fixo small { display: block; font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--texto-suave); }
+.sim-fixo b { display: block; font-size: 1.08rem; font-weight: 800; margin: .15rem 0; }
+.sim-fixo span { font-size: .84rem; color: var(--texto-suave); }
+@media (max-width: 480px) { .sim-fixo img { width: 96px; } }
+
+/* No celular o painel vem logo depois das fotos, e não no fim da página:
+   a coluna da esquerda se desfaz e os blocos ganham ordem. */
+@media (max-width: 999px) {
+  .veiculo-layout > div:first-child { display: contents; }
+  .veiculo-layout .galeria { order: 1; }
+  .veiculo-layout .painel-preco { order: 2; }
+  .veiculo-layout > div:first-child > div:not(.galeria) { order: 3; margin-top: .5rem !important; }
+}
+
 
 .tabela-ficha {
   display: grid; gap: 1px; background: var(--linha);
@@ -1710,206 +1540,84 @@ input[type='range']::-moz-range-thumb {
 .comparativo .bom { color: var(--ok); }
 
 /* ==========================================================================
-   21. FAIXA DE TEXTO QUE DESLIZA COM A ROLAGEM
-   Não roda sozinha: anda para a esquerda só enquanto a pessoa rola a página
-   (--p de 0 a 1, do parallax). Palavra cheia e palavra vazada se alternam.
+   22. ESTOQUE DA HOME: GRADE DE LOJA (modelo Belloni / Webmotors)
+   Oito cartões brancos sobre o cinza: foto 4:3 com o ano no canto, nome,
+   ano · km · câmbio, preço e "Ver detalhes". O cartão inteiro é link. No
+   celular vira lista (foto à esquerda, dados à direita), como nos portais.
    ========================================================================== */
 
-.faixa-texto {
-  --p: 0;
-  /* clip, e não hidden: hidden vira área de rolagem própria e a animação
-     ligada à rolagem (celular) ficaria presa a ela, sem andar */
-  overflow: hidden; overflow: clip; white-space: nowrap;
-  padding-block: clamp(1.4rem, 3.2vw, 2.6rem);
-  border-block: 1px solid var(--linha);
+.estoque-home__topo {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 1rem 2rem; margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
 }
-.faixa-texto__trilho {
-  display: inline-flex; align-items: center; gap: clamp(1.4rem, 3vw, 2.6rem);
-  font-size: clamp(2.6rem, 8.5vw, 7.4rem); font-weight: 800; font-stretch: 82%;
-  text-transform: uppercase; letter-spacing: -.02em; line-height: 1;
-  transform: translateX(calc(var(--p) * -34%));
-  will-change: transform;
-}
-.faixa-texto__trilho span:nth-of-type(even) {
-  color: transparent; -webkit-text-stroke: 1.5px var(--texto);
-}
-.faixa-texto__trilho i {
-  width: .2em; height: .2em; border-radius: 50%; flex: none;
-  background: var(--acento); box-shadow: 0 0 18px rgba(26, 86, 240, .5);
-}
+.estoque-home__topo h2 { font-size: clamp(1.9rem, 3.8vw, 3rem); }
 
-/* ==========================================================================
-   22. VITRINE: DESTAQUES DA SEMANA
-   Abas por tipo de carro, um carro por vez num palco claro, nome do modelo
-   gigante atrás dele. As fotos de estúdio (fundo cinza claro) entram com
-   `multiply` e máscara nas bordas: o fundo da foto se funde ao palco e o nome
-   aparece "atrás" do carro sem precisar recortar ninguém.
-   ========================================================================== */
+.grade-loja { display: grid; gap: clamp(1rem, 1.6vw, 1.4rem); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1080px) { .grade-loja { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
-.vitrine__topo {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
-  margin-bottom: 1.2rem;
+.loja-card {
+  position: relative; display: flex; flex-direction: column;
+  background: #fff; border: 1px solid var(--linha);
+  border-radius: 18px; overflow: hidden;
+  transition: transform .45s var(--suave), box-shadow .45s var(--suave), border-color .3s ease;
 }
-.vitrine__abas { display: flex; flex-wrap: wrap; gap: .4rem; }
-.vitrine__aba {
-  padding: .7rem 1.25rem; border-radius: 999px;
-  background: var(--papel-2); border: 1px solid var(--linha);
-  font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  transition: background .3s ease, color .3s ease, border-color .3s ease;
+.loja-card:hover { transform: translateY(-4px); border-color: transparent; box-shadow: 0 26px 44px -30px rgba(8, 9, 12, .45); }
+.loja-card__foto { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #eef0f2; }
+.loja-card__foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--suave); }
+.loja-card:hover .loja-card__foto img { transform: scale(1.04); }
+.loja-card__ano {
+  position: absolute; top: .8rem; left: .8rem;
+  padding: .34rem .72rem; border-radius: 999px;
+  background: rgba(8, 9, 12, .58); color: #fff;
+  font-size: .76rem; font-weight: 700; letter-spacing: .02em;
 }
-.vitrine__aba:hover { border-color: var(--texto-suave); }
-.vitrine__aba[aria-selected="true"] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
-.vitrine__aba small { opacity: .5; margin-left: .35rem; font-weight: 600; }
+.loja-card__selo {
+  position: absolute; top: .8rem; right: .8rem;
+  padding: .34rem .7rem; border-radius: 999px;
+  background: var(--acento); color: #fff;
+  font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+.loja-card__corpo { display: flex; flex-direction: column; flex: 1; padding: 1.05rem 1.2rem 1.15rem; }
+.loja-card__marca {
+  font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--texto-suave); margin-bottom: .3rem;
+}
+.loja-card__nome {
+  font-size: 1.04rem; font-weight: 700; line-height: 1.28; letter-spacing: -.01em;
+  text-transform: none; font-stretch: 100%;
+  min-height: 2.56em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.loja-card__info {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .45rem;
+  margin: .6rem 0 1rem; font-size: .84rem; color: var(--texto-suave);
+}
+.loja-card__info i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .7; }
+.loja-card__pe {
+  margin-top: auto; padding-top: .95rem; border-top: 1px solid var(--linha);
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+}
+.loja-card__pe b { font-size: 1.32rem; font-weight: 800; letter-spacing: -.02em; font-stretch: 92%; }
+.loja-card__pe span { display: inline-flex; align-items: center; gap: .15rem; font-size: .84rem; font-weight: 600; color: var(--acento); white-space: nowrap; }
+.loja-card__pe .icone { width: .95rem; height: .95rem; }
+.estoque-home__mais { display: flex; justify-content: center; margin-top: clamp(1.8rem, 3vw, 2.6rem); }
 
-.vitrine__palco {
-  --p: .5;
-  position: relative; isolation: isolate; overflow: hidden;
-  display: grid; place-items: center;
-  /* altura travada: a foto 4:3 esticada na largura toda passava de 800px e
-     o carro caía para fora da tela. Agora a foto segue a altura do palco. */
-  height: clamp(300px, 40vw, 560px);
-  border-radius: var(--raio-g);
-  background: radial-gradient(120% 95% at 50% 40%, #ffffff 0%, #f7f8f9 60%, #eef0f2 100%);
+@media (max-width: 639px) {
+  .grade-loja { grid-template-columns: 1fr; gap: .7rem; }
+  .loja-card { flex-direction: row; border-radius: 14px; }
+  .loja-card__foto { flex: 0 0 42%; aspect-ratio: auto; min-height: 132px; }
+  .loja-card__ano { top: .5rem; left: .5rem; padding: .25rem .55rem; font-size: .68rem; }
+  .loja-card__selo { display: none; }
+  .loja-card__corpo { padding: .75rem .85rem .8rem; min-width: 0; }
+  .loja-card__marca { font-size: .6rem; margin-bottom: .15rem; }
+  .loja-card__nome { font-size: .9rem; min-height: 0; }
+  .loja-card__info { margin: .35rem 0 .55rem; font-size: .74rem; gap: .35rem; }
+  .loja-card__pe { padding-top: .55rem; }
+  .loja-card__pe b { font-size: 1.08rem; }
+  .loja-card__pe span { font-size: 0; }
+  .loja-card__pe .icone { width: 1.1rem; height: 1.1rem; }
+  .estoque-home__topo .link-seta { display: none; }
 }
-.vitrine__nome {
-  position: absolute; left: 50%; top: 36%; z-index: -1;
-  translate: -50% -50%;
-  font-size: clamp(4.2rem, 17vw, 15.5rem); font-weight: 900; font-stretch: 78%;
-  text-transform: uppercase; letter-spacing: -.035em; line-height: .8;
-  white-space: nowrap; color: #dfe3e8;
-  transform: translateX(calc((var(--p) - .5) * -16%));
-  pointer-events: none;
-}
-/* presa em cima e embaixo: altura exata do palco, largura sai do 4:3.
-   (height: 100% dentro da grade não resolvia e a foto crescia pela largura) */
-.vitrine__carro {
-  position: absolute; top: 0; bottom: 0; left: 50%; translate: -50% 0;
-  height: 100%; width: auto; max-width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
-  user-select: none;
-  mix-blend-mode: multiply;
-  /* degradê nos quatro lados (dois lineares cruzados): a moldura da foto some
-     no palco sem apagar a frente e a traseira do carro, que ficam a ~10% da
-     borda depois do enquadramento padronizado */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, transparent 2%, #000 11%, #000 89%, transparent 98%),
-    linear-gradient(to bottom, transparent 0, transparent 2%, #000 17%, #000 83%, transparent 98%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, transparent 2%, #000 11%, #000 89%, transparent 98%),
-    linear-gradient(to bottom, transparent 0, transparent 2%, #000 17%, #000 83%, transparent 98%);
-  mask-composite: intersect;
-}
-@media (max-width: 640px) {
-  .vitrine__palco { height: auto; }
-  .vitrine__carro { position: relative; left: auto; translate: none; width: 100%; height: auto; }
-}
-.vitrine__selo { position: absolute; top: 1rem; left: 1rem; z-index: 2; }
-.vitrine__contador {
-  position: absolute; top: 1.1rem; right: 1.2rem; z-index: 2;
-  font-size: .78rem; font-weight: 700; letter-spacing: .14em; color: var(--texto-suave);
-}
-.vitrine__contador b { color: var(--texto); font-size: 1.05rem; }
-
-.vitrine__rodape {
-  display: grid; gap: 1.2rem; align-items: center;
-  margin-top: 1.4rem;
-}
-@media (min-width: 900px) {
-  .vitrine__rodape { grid-template-columns: 1fr auto auto; gap: 2rem; }
-}
-.vitrine__info .carro__marca { margin-bottom: .2rem; }
-.vitrine__info h3 { font-size: clamp(1.5rem, 3vw, 2.3rem); margin-bottom: .3rem; }
-.vitrine__info p { color: var(--texto-suave); margin-bottom: .7rem; }
-.vitrine__info .fichas { margin: 0; }
-.vitrine__preco s { display: block; font-size: .85rem; color: var(--texto-suave); }
-.vitrine__preco b {
-  display: block; font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight: 800; font-stretch: 90%;
-  letter-spacing: -.03em; line-height: 1;
-}
-.vitrine__preco small { font-size: .8rem; color: var(--texto-suave); }
-.vitrine__acoes { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
-.vitrine__setas { display: flex; gap: .5rem; }
-.vitrine__setas .carrossel__seta { display: inline-flex; }
-@media (max-width: 640px) {
-  /* abas numa linha só, deslizando para o lado */
-  .vitrine__topo { flex-direction: column; align-items: stretch; }
-  .vitrine__abas {
-    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
-    margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter);
-  }
-  .vitrine__abas::-webkit-scrollbar { display: none; }
-  .vitrine__aba { flex: none; }
-  .vitrine__topo .link-seta { align-self: flex-start; }
-  /* o WhatsApp flutuante já está na tela; aqui ficam setas e o botão principal */
-  .vitrine__acoes [data-zap-carro] { display: none; }
-  .vitrine__acoes { justify-content: space-between; }
-}
-
-/* ==========================================================================
-   23. VITRINE ESCURA: O CARRO EM DESTAQUE
-   O momento "RAM 3500" do vídeo de referência: foto escura em tela cheia,
-   nome do modelo gigante digitado letra por letra, preço digitado depois.
-   Foto e texto andam em velocidades diferentes com a rolagem.
-   ========================================================================== */
-
-.vitrine-escura {
-  --p: 0;
-  position: relative; isolation: isolate; overflow: hidden;
-  display: grid; align-items: end;
-  min-height: min(100svh, 880px);
-  padding-block: clamp(4rem, 9vw, 7rem);
-  background: var(--tinta); color: #fff;
-}
-.vitrine-escura__fundo { position: absolute; inset: -14% 0; z-index: -2; }
-.vitrine-escura__fundo img {
-  width: 100%; height: 100%; object-fit: cover; object-position: 62% 58%;
-  transform: translateY(calc((var(--p) - .5) * 16%)) scale(1.06);
-  will-change: transform;
-}
-.vitrine-escura::after {
-  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    linear-gradient(to top, rgba(8, 9, 12, .96) 4%, rgba(8, 9, 12, .55) 38%, rgba(8, 9, 12, .15) 70%, rgba(8, 9, 12, .6) 100%),
-    linear-gradient(to right, rgba(8, 9, 12, .7), transparent 60%);
-}
-.vitrine-escura__nome {
-  display: block;
-  font-size: clamp(4.4rem, 17vw, 16rem); font-weight: 900; font-stretch: 76%;
-  line-height: .8; letter-spacing: -.035em; text-transform: uppercase;
-  margin: .6rem 0 1.4rem;
-  transform: translateY(calc((var(--p) - .5) * -80px));
-  text-shadow: 0 10px 60px rgba(0, 0, 0, .35);
-}
-.vitrine-escura__linha {
-  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.6rem;
-}
-.vitrine-escura__preco small {
-  display: block; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .55); margin-bottom: .3rem;
-}
-.vitrine-escura__preco b {
-  display: block; font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800; font-stretch: 88%;
-  letter-spacing: -.03em; line-height: 1;
-}
-.vitrine-escura__specs {
-  display: flex; flex-wrap: wrap; gap: .5rem 1.4rem;
-  margin-top: .9rem; font-size: .9rem; color: rgba(255, 255, 255, .7);
-}
-.vitrine-escura__specs span { display: inline-flex; align-items: center; gap: .45rem; }
-.vitrine-escura__specs .icone { width: 1rem; height: 1rem; color: var(--brilho); }
-
-/* Digitação: um "fantasma" invisível segura o tamanho final (sem pulo de
-   layout) e o texto digitado corre por cima dele, com cursor piscando. */
-.digita { position: relative; display: inline-block; }
-.digita__fantasma { visibility: hidden; }
-.digita__texto { position: absolute; left: 0; top: 0; white-space: nowrap; }
-.digita__texto::after {
-  content: ''; display: inline-block; width: .055em; height: .74em;
-  margin-left: .05em; background: var(--brilho); vertical-align: -.02em;
-  animation: pisca-cursor 1s steps(1) infinite;
-}
-.digita.terminou .digita__texto::after { animation: pisca-cursor 1s steps(1) 3 forwards; }
-@keyframes pisca-cursor { 50% { opacity: 0; } }
 
 /* ==========================================================================
    24. TÍTULOS QUE SOBEM POR LINHA
@@ -1983,7 +1691,7 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ==========================================================================
    19. QUEM PREFERE MENOS MOVIMENTO
-   O site continua inteiro, só para quieto: sem abertura, sem parallax, sem
+   O site continua inteiro, só para quieto: sem parallax, sem
    vídeo (o JS nem carrega), sem digitação e sem troca animada de página.
    ========================================================================== */
 
@@ -1996,16 +1704,12 @@ html.lenis, html.lenis body { height: auto; }
   }
   .js .rev { opacity: 1; transform: none; }
   .js .hero__titulo b, .menu__lista a { opacity: 1; transform: none; }
-  .js .hero__sub, .js .busca, .js .hero__legenda { opacity: 1; }
-  .js .hero__palco { filter: none; }
-  .js .hero__midia { scale: 1; }
+  .js .hero__sub, .js .hero__etiqueta, .js .hero__acoes { opacity: 1; }
   .js body.home .topo { opacity: 1; translate: 0 0; }
   .js .passo { opacity: 1; transform: none; }
   .js .linhas .linha > span { transform: none; }
-  .hero__varredura { display: none; }
-  .hero__midia, .quebra__fundo img, .faixa-texto__trilho, .vitrine__nome,
-  .vitrine-escura__nome, .vitrine-escura__fundo img, .foto-parallax img { transform: none; }
-  .abertura { display: none; }
+  .hero__midia, .quebra__fundo img,
+  .foto-parallax img { transform: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
 }
 
@@ -2030,20 +1734,62 @@ html.lenis, html.lenis body { height: auto; }
 .mapa { margin: 0; min-height: 360px; background: var(--papel-2); }
 .mapa iframe { width: 100%; height: 100%; min-height: 360px; border: 0; display: block; }
 
-/* aviso de cookies (LGPD), canto esquerdo para não brigar com o WhatsApp */
-.cookies {
-  position: fixed; left: 16px; bottom: 16px; z-index: 85; max-width: 360px;
-  display: grid; gap: .8rem; padding: 1rem 1.1rem; border-radius: 16px;
-  background: #0d1017; color: rgba(255,255,255,.78); font-size: .84rem; line-height: 1.45;
-  box-shadow: 0 20px 50px -20px rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.08);
-  transform: translateY(140%); transition: transform .6s var(--suave);
+/* faixa de demonstração: fina e fixa no topo, e outra igual no fim da página.
+   Empurra o cabeçalho para baixo pela variável --faixa-demo. */
+.faixa-demo ~ * { --faixa-demo: 26px; }
+.faixa-demo {
+  position: fixed; inset: 0 0 auto; z-index: 95;
+  height: 26px; padding: 0 var(--gutter);
+  display: flex; align-items: center; justify-content: center; gap: .9rem;
+  background: var(--acento); color: #fff;
+  font-size: .64rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden;
 }
-.cookies.mostra { transform: none; }
-.cookies b { color: #fff; margin-right: .3rem; }
-.cookies div { display: flex; gap: .5rem; justify-content: flex-end; }
-.cookies button { border: 1px solid rgba(255,255,255,.2); background: transparent; color: #fff; padding: .5rem .9rem; border-radius: 999px; font-size: .78rem; font-weight: 700; }
-.cookies button[data-c="todos"] { background: var(--acento); border-color: var(--acento); }
-@media (max-width: 520px) { .cookies { right: 16px; max-width: none; bottom: 84px; } }
+.faixa-demo a { color: #fff; text-decoration: underline; text-underline-offset: 2px; flex: none; }
+.faixa-demo ~ .topo { top: var(--faixa-demo); }
+.faixa-demo--pe {
+  position: static; height: auto; padding: .8rem var(--gutter);
+  white-space: normal; text-align: center; flex-wrap: wrap; gap: .3rem .9rem;
+  letter-spacing: .08em; line-height: 1.5;
+}
+@media (max-width: 759px) { .faixa-demo__longo { display: none; } }
+/* convite para o painel do vendedor, no fim da home */
+.convite-painel {
+  position: fixed; left: 16px; bottom: 16px; z-index: 86; width: min(380px, calc(100vw - 32px));
+  display: flex; gap: .9rem; align-items: flex-start;
+  padding: 1.1rem 1.1rem 1.15rem; border-radius: 18px;
+  background: #0d1017; color: rgba(255, 255, 255, .76); font-size: .86rem; line-height: 1.5;
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .7), 0 0 0 1px rgba(26, 86, 240, .25);
+  transform: translateY(calc(100% + 40px)); opacity: 0;
+  transition: transform .7s cubic-bezier(.16, 1.2, .3, 1), opacity .4s ease;
+}
+.convite-painel.mostra { transform: none; opacity: 1; }
+.convite-painel__icone {
+  flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px;
+  background: var(--acento); color: #fff;
+}
+.convite-painel__icone .icone { width: 1.25rem; height: 1.25rem; }
+.convite-painel__titulo {
+  display: flex; align-items: center; gap: .55rem; margin-bottom: .3rem;
+  color: #fff; font-weight: 700; font-size: .98rem;
+}
+.convite-painel p { margin: 0 0 .85rem; }
+.convite-painel .convite-painel__titulo { margin-bottom: .3rem; }
+.convite-painel__btn { padding: .7rem 1.1rem; font-size: .78rem; }
+.convite-painel__fechar {
+  position: absolute; top: .55rem; right: .55rem; width: 30px; height: 30px;
+  display: grid; place-items: center; border-radius: 50%;
+  background: transparent; border: 0; color: rgba(255, 255, 255, .55); cursor: pointer;
+}
+.convite-painel__fechar:hover { color: #fff; background: rgba(255, 255, 255, .08); }
+.convite-painel__fechar .icone { width: 1rem; height: 1rem; }
+@media (max-width: 520px) { .convite-painel { bottom: 84px; } }
+@media (prefers-reduced-motion: reduce) { .convite-painel { transition: opacity .2s ease; transform: none; } }
+
+/* rótulo de botão que muda entre computador e celular */
+.so-cel { display: none !important; }
+@media (max-width: 759px) { .so-desk { display: none !important; } .so-cel { display: inline-block !important; } }
 
 /* página do carro: cabeçalho compacto, para a foto e o preço aparecerem já
    na primeira tela (antes a faixa escura ocupava metade da altura) */
@@ -2056,40 +1802,14 @@ html.lenis, html.lenis body { height: auto; }
 /* ==========================================================================
    27. TELA DE TOQUE: leve para rolar liso
    Sem desfoque de vidro (backdrop-filter repinta tudo que passa por baixo a
-   cada quadro), sem névoa e brilho animados e sem transform ligado à rolagem.
+   cada quadro) e sem transform ligado à rolagem.
    Medido com processador 4x mais lento: os quadros acima de 50 ms zeram.
    ========================================================================== */
 .toque * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 .toque .topo.encolheu { background: #fff; }
-.toque .busca { background: rgba(20, 23, 30, .92); }
 .toque .selo { background: rgba(8, 9, 12, .88); }
-.toque .hero__nevoa, .toque .hero__brilho { animation: none; transform: none; }
-.toque .hero__brilho { filter: none; background: radial-gradient(circle, rgba(26, 86, 240, .22), transparent 60%); }
 .toque .hero__midia { will-change: auto; transform: none; }
 .toque .hero__titulo b { translate: none; }
-.toque .vitrine__nome, .toque .vitrine-escura__nome { transform: none; will-change: auto; }
-/* no toque a faixa anda sozinha (animação que a GPU toca, lisa); o texto vem duplicado, então -50% emenda */
-.toque .faixa-texto__trilho { transform: none; animation: faixa-anda 38s linear infinite; }
-/* navegador novo (Chrome/Android 115+, Safari 26+): a faixa anda com a rolagem
-   por scroll-driven animation, que a GPU toca sem JavaScript e não trava */
-@supports (animation-timeline: view()) {
-  .toque .faixa-texto__trilho { animation: faixa-rola linear both; animation-timeline: view(); }
-  @keyframes faixa-rola { from { translate: 0 0; } to { translate: -34% 0; } }
-}
-@keyframes faixa-anda { from { translate: 0 0; } to { translate: -50% 0; } }
-.toque .quebra__fundo img, .toque .vitrine-escura__fundo img, .toque .foto-parallax img { transform: none; will-change: auto; }
-.toque .quebra__fundo, .toque .vitrine-escura__fundo { inset: 0; }
+.toque .quebra__fundo img, .toque .foto-parallax img { transform: none; will-change: auto; }
+.toque .quebra__fundo { inset: 0; }
 
-/* setas da vitrine nas pontas da foto, no meio da altura */
-.vitrine__palco .vit-seta {
-  position: absolute; top: 50%; translate: 0 -50%; z-index: 3;
-  width: 52px; height: 52px; background: rgba(255, 255, 255, .9); border-color: var(--linha);
-  box-shadow: 0 10px 24px -14px rgba(8, 9, 12, .45);
-}
-.vitrine__palco .vit-seta:hover { background: #fff; }
-.vit-seta--ant { left: 14px; }
-.vit-seta--prox { right: 14px; }
-@media (max-width: 640px) { .vitrine__palco .vit-seta { width: 42px; height: 42px; } .vit-seta--ant { left: 8px; } .vit-seta--prox { right: 8px; } }
-
-.vitrine__todos { padding: 1rem 1.9rem; }
-@media (max-width: 640px) { .vitrine__todos { width: 100%; } }
